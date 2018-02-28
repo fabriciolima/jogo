@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src * gap: ws: https://ssl.gstatic.com;style-src * 'unsafe-inline' 'self' data: blob:;script-src * 'unsafe-inline' 'unsafe-eval' data: blob:;img-src * data: 'unsafe-inline' 'self' content:;fmedia-src mediastream;"> -->
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src * gap: ws: https://ssl.gstatic.com;style-src * 'unsafe-inline' 'self' data: blob:;script-src * 'unsafe-inline' 'unsafe-eval' data: blob:;img-src * data: 'unsafe-inline' 'self' content:;fmedia-src mediastream;">
+
+<meta charset="utf-8">
+<title>Troca de games</title>
+<link rel="stylesheet" href="icons/material.css">
+<link rel="stylesheet" href="css/materialize.min.css">
+<link rel="stylesheet" href="css/estilos.css">
+<link rel="stylesheet" href="css/material-refresh.min.css">
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+		<script>
+//             window.fbAsyncInit = function() {
+//                 FB.init({
+//                 appId      : '298354904026626',
+//                 xfbml      : true,
+//                 version    : 'v2.12'
+//                 });
+//                 FB.AppEvents.logPageView();
+//             };
+
+//             (function(d, s, id){
+//                 var js, fjs = d.getElementsByTagName(s)[0];
+//                 if (d.getElementById(id)) {return;}
+//                 js = d.createElement(s); js.id = id;
+//                 js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+//                 //js.src = "https://connect.facebook.net/en_US/all.js";
+//                 fjs.parentNode.insertBefore(js, fjs);
+//             }(document, 'script', 'facebook-jssdk'));
+        </script>
+ 	<header id="navMain" class="nav-bar">
+		<div class="topo-fixo z-depth-1">
+		<div class="valign-wrapper yellow darken-4 white-text">
+			<h5 class="titulo">GameZ</h5>
+
+			<span id="doRotate">
+                    <span  class="rotate-btn"></span>
+                </span>
+				
+			<div>
+                <i class="material-icons waves-effect waves-light waves-circle atualiza">refresh</i>
+				<i class="material-icons waves-effect waves-light waves-circle cadastro-jogo">add_circle_outline</i>
+
+				<i
+					class="material-icons waves-effect waves-light
+                          waves-circle dropdown-button"
+					data-activates="submenu" data-gutter="5"
+					data-constrainwidth="false"> more_vert </i>
+
+				<ul id="submenu" class="dropdown-content">
+					<li><a class="black-text acao-limpar">Limpar</a></li>
+					<li><a class="black-text galeria">galeria </a></li>
+					<li><a class="black-text teste">subir</a></li>
+					
+				</ul>
+			</div>
+		</div>
+		
+
+		<ul class="tabs yellow darken-4">
+			<li class="tab"><a href="#porperto"
+				class="white-text waves-effect waves-light"> Por Perto </a></li>
+			<li class="tab"><a href="#meusjogos"
+				class="white-text waves-effect waves-light"> Meus Jogos </a></li>
+		</ul>
+	</div>
+
+	</header>
+
+	<div class="demo-code">
+            mRefresh({
+            <p class="indent">
+                nav: '#navMain'
+            </p>
+            });
+	</div>
+	
+	<div id="contentMain" class='contents'>
+        
+		<div id="porperto" class="section">
+			<ul data-role="listview" id="SomeListView" class="tab"></ul>
+		</div>
+	</div>
+	
+	
+	<div id="meusjogos" class="section">
+
+		<ul data-role="listview" id="SomeListView" class="tab"></ul>		
+	</div>
+
+	<div class="fixed-action-btn">
+		<a
+			class="btn-floating btn-large waves-effect waves-light brown modal-trigger"
+			href="#confirmacao" id="confirmar"> <i class="material-icons">done</i>
+		</a>
+	</div>
+
+	<div id="confirmacao" class="modal modal-fixed-footer">
+		<div class="modal-content">
+			<h5>Resumo do pedido</h5>
+			<input id="numero-mesa" type="number" class="validate"
+				placeholder="Número da mesa">
+			<blockquote id="resumo"></blockquote>
+		</div>
+		<div class="modal-footer">
+			<button class="btn deep-orange waves-effect waves-light modal-close">
+				Pedir</button>
+			<button
+				class="btn-flat waves-effect waves-red modal-close acao-limpar">
+				Cancelar</button>
+		</div>
+	</div>
+
+
+	<!--         <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script> -->
+<!-- 		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script> -->
+        <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+<!-- 		<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script> -->
+<!-- 		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-database.js"></script> -->
+		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
+<!-- 		<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script> -->
+		<!-- <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-storage.js"></script> -->
+		
+
+    <script src="js/firebase.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/materialize.min.js"></script>
+	<script src="cordova.js"></script>
+	<script src="js/geral.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/material-refresh.min.js"></script>
+	
+	 <script type="text/javascript" charset="utf-8">
+
+// 	 document.addEventListener("deviceready",onDeviceReady,false);
+
+//     function onDeviceReady() {
+//     	var fbLoginSuccess = function (userData) {
+//             //alert("UserInfo: " + JSON.stringify(userData));
+//             console.log("UserInfo: " + JSON.stringify(userData));
+//         }
+
+//         facebookConnectPlugin.login(["public_profile"],
+//             fbLoginSuccess,
+//             function (error) { 
+//               //  alert("" + error) 
+//                 console.log(error);
+//             }
+//         );
+
+
+//     }
+
+;(function(){
+
+    $(document).on("touchstart", function(e){
+        /* e.preventDefault(); */
+    });
+}());
+
+    (function(){
+        // Init Type2 
+        mRefresh({
+            nav: '#navMain',
+            scrollEl: '#contentMain'
+        })
+        // Button on the top of page
+        $('#doRotate').on('tap click',function(){
+            mRefresh.refresh();   
+            return false;
+        });
+
+        // Content demo button
+        $('#buttonAction').on('tap click', function(){
+            mRefresh.refresh({
+                onBegin: function(){
+                    alert('It begin to rotate! You can do something like pull ajax data!');
+                }    
+                });
+            return false;
+        });   
+
+        // prevent browser scroll
+        $('#navMain').on('touchstart', function(e){
+             e.preventDefault();
+        });
+        // Handle the start of interactions
+        $('#contentMain').on('touchmove', function(e){
+            var el = document.getElementById("contentMain");
+            var startTopScroll = el.scrollTop;
+
+            if (startTopScroll <= 0) {
+                el.scrollTop = 1;
+            }
+            if(startTopScroll + el.offsetHeight >= el.scrollHeight) {
+                el.scrollTop = el.scrollHeight - el.offsetHeight - 1;
+            }
+        });
+
+    })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "name": "org.sergiolopes.garconapp",
+  "version": "0.0.1",
+  "displayName": "Garçonete Só de Cenoura",
+  "cordova": {
+    "platforms": [
+      "browser",
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-googlemaps": {
+        "API_KEY_FOR_ANDROID": "AIzaSyAWjHwV4XROiM8YYRtqUBfaPNtn-ixZHh0",
+        "PLAY_SERVICES_VERSION": "11.8.0",
+        "LOCATION_WHEN_IN_USE_DESCRIPTION": "Show your location on the map",
+        "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Trace your location on the map"
+      },
+      "cordova-plugin-file": {}
+    }
+  },
+  "dependencies": {
+    "android-versions": "^1.2.1",
+    "cordova-android": "^7.0.0",
+    "cordova-browser": "^5.0.1",
+    "cordova-plugin-file": "^6.0.1",
+    "cordova-plugin-googlemaps": "^2.2.3",
+    "cordova-plugin-photo-library": "^2.1.0",
+    "cordova-plugin-statusbar": "^2.2.3",
+    "cordova-sqlite-storage": "^2.2.0",
+    "material-refresh": "^0.1.0",
+    "materialize-css": "^0.100.2"
+  }
+}
