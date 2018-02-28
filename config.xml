@@ -74,17 +74,17 @@
         <preference name="StatusBarBackgroundColor" value="#F57F17" />
     </platform>
     <access origin="*" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
+    <preference name="phonegap-version" value="cli-7.1.0" />
     <plugin name="cordova-plugin-whitelist" />
-    <plugin name="cordova-plugin-googlemaps" spec="^2.2.3">
+    <plugin name="cordova-sqlite-storage" spec="^2.2.0" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
+    <plugin name="cordova-plugin-googlemaps" spec="^2.2.5">
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyAWjHwV4XROiM8YYRtqUBfaPNtn-ixZHh0" />
         <variable name="PLAY_SERVICES_VERSION" value="11.8.0" />
         <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="Show your location on the map" />
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="Trace your location on the map" />
     </plugin>
-    <preference name="phonegap-version" value="cli-7.1.0" />
-    <plugin name="cordova-sqlite-storage" spec="^2.2.0" />
-    <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <engine name="browser" spec="^5.0.1" />
     <engine name="android" spec="^7.0.0" />
 </widget>
