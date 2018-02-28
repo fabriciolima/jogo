@@ -396,3 +396,21 @@ function nomePlataforma(idPlataforma){
 	return retorno;
 	
 }
+
+function getJogos(){
+	db.collection("jogos").get().then(function (lista){
+	console.log("lista:"+lista);
+	lista.forEach(function(doc){ 
+		if(doc && doc.exists){
+			console.log(doc.data());
+			console.log(doc.data().nome);
+//			console.log("nome--"+doc.nome());
+			adicionaJogoTelaInicial(doc.data());
+		}
+	});
+	}).catch(function(erro){
+		console.log(erro);
+	});
+}
+	
+getJogos();

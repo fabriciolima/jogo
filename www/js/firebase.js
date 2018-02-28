@@ -79,20 +79,3 @@
 //	  console.log("The read failed: " + errorObject.code);
 //	});
 	
-function getClientes(){
-	db.collection("clientes").get().then(function (lista){
-	console.log("lista:"+lista);
-	lista.forEach(function(doc){ 
-		if(doc && doc.exists){
-			console.log(doc.data());
-			console.log(doc.data().nome);
-//			console.log("nome--"+doc.nome());
-			adicionaJogoTelaInicial(doc.data());
-		}
-	});
-	}).catch(function(erro){
-		console.log(erro);
-	});
-}
-	
-getClientes();
