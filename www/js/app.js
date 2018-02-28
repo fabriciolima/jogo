@@ -1,29 +1,3 @@
-//document.addEventListener('deviceready', function(){
-//	var myDB=getDB();
-//	myDB.transaction(function(tx) {
-//    	tx.executeSql('CREATE TABLE IF NOT EXISTS jogos (id integer PRIMARY KEY, '
-//    			+'nome text NOT NULL unique, revisao integer)');
-//
-//    	tx.executeSql('INSERT or replace into jogos(id,nome,revisao) values '
-//    			+' (1,"007 Racing",1),'
-//    			+' (2,"007: The World Is Not Enough",1),'
-//    			+' (3,"007: Tomorrow Never Dies",1),'
-//    			+' (4,"100 Floors",1),'
-//    			+' (5,"100ft Robot Golf",1)');
-//
-//		tx.executeSql('SELECT nome from jogos', [], function(tx, rs){
-//			for(cont = 0; cont < rs.rows.length; cont++){
-//				//console.log(rs.rows.item(cont).nome);
-//				//dataNome[rs.rows.item(cont).nome]=null;//rs.rows.item(cont).nome;
-//			}
-//
-//		},function(erro){
-//			console.log(erro.message);
-//		});
-//		
-//	});
-//
-//});
 
 $('.collection')
     .on('click', '.collection-item', function(){
@@ -397,20 +371,39 @@ function nomePlataforma(idPlataforma){
 	
 }
 
+getPlataforma(){
+	db.collection("plataforma").get().then({ includeQueryMetadataChanges: true }, function(snapshot) {       
+		snapshot.docChanges.forEach(function(change) {
+			console.log('change',change);
+			adicionaJogoTelaInicial(change.doc.data());
+			if (change.type === "added") {console.log("New city: ", change.doc.data());}
+			
+			var source = snapshot.metadata.fromCache ? "local cache" : "server";           
+			console.log("Data came from " + source);       });   
+		});
+}
+
 function getJogos(){
-	db.collection("jogos").get().then(function (lista){
-	console.log("lista:"+lista);
-	lista.forEach(function(doc){ 
-		if(doc && doc.exists){
-			console.log(doc.data());
-			console.log(doc.data().nome);
-//			console.log("nome--"+doc.nome());
-			adicionaJogoTelaInicial(doc.data());
-		}
-	});
-	}).catch(function(erro){
-		console.log(erro);
-	});
+	
+//	db.collection("jogos").get().then(function (lista){
+//			console.log("lista:"+lista);
+//			lista.forEach(function(doc){ 
+//				if(doc && doc.exists){
+//					console.log(doc.data());
+//					console.log(doc.data().nome);
+//					adicionaJogoTelaInicial(doc.data());
+//				}});});
+	
+		db.collection("jogos").get().then({ includeQueryMetadataChanges: true }, function(snapshot) {       
+			snapshot.docChanges.forEach(function(change) {
+				console.log('change',change);
+				adicionaJogoTelaInicial(change.doc.data());
+				if (change.type === "added") {console.log("New city: ", change.doc.data());}
+				
+				var source = snapshot.metadata.fromCache ? "local cache" : "server";           
+				console.log("Data came from " + source);       });   
+			});
+	
 }
 	
 getJogos();

@@ -12,25 +12,25 @@
     messagingSenderId: "1082277080885"
   };
   firebase.initializeApp(config);
-	var db = firebase.firestore();
-	//.enablePersistence()
-	//.then(function() {
-	//    // Initialize Cloud Firestore through firebase
-	//    var db = firebase.firestore();
-	//})
-	//.catch(function(err) {
-	//    if (err.code == 'failed-precondition') {
-	//        // Multiple tabs open, persistence can only be enabled
-	//        // in one tab at a a time.
-	//        // ...
-	//    } else if (err.code == 'unimplemented') {
-	//        // The current browser does not support all of the
-	//        // features required to enable persistence
-	//        // ...
-	//    }
-	//});
+  var db = firebase.firestore();
+  firebase.firestore().enablePersistence()
+	.then(function() {
+	    console.log('offline');
+	    var db = firebase.firestore();
+	})
+	.catch(function(err) {
+	    if (err.code == 'failed-precondition') {
+	        // Multiple tabs open, persistence can only be enabled
+	        // in one tab at a a time.
+	        // ...
+	    } else if (err.code == 'unimplemented') {
+	        // The current browser does not support all of the
+	        // features required to enable persistence
+	        // ...
+	    }
+	});
 	
-	const docCliente = db.doc("cliente/ninguem");
+//	const docCliente = db.doc("cliente/ninguem");
 //	docCliente.set({
 //		nome: "ninguem"
 //	}).then(function(){console.log("salvo");})
@@ -38,13 +38,13 @@
 //			console.log(erro);
 //		});
 	
-	
-	docCliente.get().then(function (doc){
-		if(doc && doc.exists)
-			console.log(doc.data());
-	}).catch(function(erro){
-		console.log(erro);
-	});
+//	
+//	docCliente.get().then(function (doc){
+//		if(doc && doc.exists)
+//			console.log(doc.data());
+//	}).catch(function(erro){
+//		console.log(erro);
+//	});
 	
 	
 	
