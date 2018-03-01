@@ -82,3 +82,15 @@
 //	  console.log("The read failed: " + errorObject.code);
 //	});
 	
+function getJogo(nomeJogo){
+		retorno=null;
+		db.collection("jogo").where("nome","==",nomeJogo)
+			.get().then(function (lista){
+				lista.forEach(function(doc) {
+		            retorno = doc.data();
+		        });
+
+			});
+				
+		return retorno;
+}

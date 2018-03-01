@@ -37,18 +37,44 @@ $('.foto').on('click', function() {
 
 
 $('form').submit(function(){
+
+
 	var storage = window.localStorage;
     var postData = $(this).serialize();
-    console.log(postData);
-    idCliente = storage.getItem('idCliente');
-    const docCliente = db.doc(clientes+"/"+idCliente+"jogoCliente/"+storage.getItem('idCliente'));
-	docCliente.set({
-		id:0,
-		nome: "Outros"
-	}).then(function(){console.log("salvo");})
-		.catch(function(erro){
-			console.log(erro);
-		});
+    idCliente = 1;//storage.getItem('idCliente');
+    nomeJogo = $('#nome').val().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    
+    idJogo=0;
+    db.doc("jogo2/"+nomeJogo).get().then(function(doc){idJogo=doc.id})
+    .catch(function(erro){
+    	db.collection("jogo2").doc(nomejogo).set({nome: nomeJogo})
+    	.then(function(doc){idJogo=doc.id});
+    })
+
+    console.log(idCliente);
+    console.log($('#console').val());
+    console.log($('#estado').val());
+    console.log(idJogo + ','+nomeJogo);
+    console.log($('#comentario').val());
+    console.log($('#dinheiro').val());
+    
+    db.collection("jogotroca").add({
+		console:$('#console').val(),
+		estado:$('#estado').val(),
+		idjogo:idJogo,//errado
+		comentario:$('#comentario').val(),
+		dinheiro:$('#dinheiro').val()}
+    ).then(function(){console.log("salvo");})
+		.catch(function(erro){console.log(erro);});
+    
+    console.log();
+    
+//    db.collection("plataforma")
+//    	.add(
+//    			{nome: "Playstation 1"})
+//    			.then(function(){console.log("salvo");});
+    
+    
 	
         
 
@@ -93,11 +119,34 @@ function clickfunc(object) {
 	}
 
 
-function autocompletajogo(){
-	nomeJogo = $('#nome').val();
+function autocompleta(){
+	nomeJogo = $('#nome').val().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 //	if($('#nome').val().length > 3)
 	{
-	
+//		data = "";
+//		db.collection("jogo").where("nome",">=",nomeJogo).limit(3).get().then(function (lista){
+//			lista.forEach(function(doc){ 
+//				console.log(doc.data());
+//				if(data != "")
+//					data = data+',"'+doc.data().nome+'":null';
+//				else
+//					data = '{"'+doc.data().nome+'":null';
+//			});
+//			data += "}";
+//			
+//			console.log(data);
+//		});
+//		$('#nome').autocomplete({
+//			data:data,
+//			limit: 3, // The max amount of results that can be shown at once. Default: Infinity.
+//			onAutocomplete: function(val) {
+//			}, minLength: 2, // The minimum length of the input for the autocomplete to start. Default: 1.
+//		});
+			
+			
+
+		};
+		
 //		var jogo = 	db.collection("jogo");
 //		jogo.orderBy("nome").limit(3);
 //		jogo.where("nome",">=",nomeJogo).get().then({ includeQueryMetadataChanges: true }, function(snapshot) {
@@ -112,70 +161,43 @@ function autocompletajogo(){
 //			console.log("Data came from " + source);       });   
 //		});;
 
-//	$('#nome').autocomplete({
-//		data: {
-//	      "Apple": null,
-//	      "Microsoft": null,
-//	      "Google": 'https://placehold.it/250x250'
-//	    },
-//	    limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
-//	    onAutocomplete: function(val) {
-//	    }, minLength: 2, // The minimum length of the input for the autocomplete to start. Default: 1.
-//  });
-	}
+	
+	
 }
 
 function atualizaCadastro(){
 	document.addEventListener('deviceready', function(){
 		
-		myDB = getDB();
 //--------------------------------------------------------------------------------------------
-		var dataNome ={
-		      "Outros": null};
-		myDB.transaction(function(tx) {
-			tx.executeSql('SELECT nome from jogos', [], function(tx, rs){
-				for(cont = 0; cont < rs.rows.length; cont++){
-					//console.log(rs.rows.item(cont).nome);
-					dataNome[rs.rows.item(cont).nome]=null;//rs.rows.item(cont).nome;
-				}
-	
-			},function(erro){
-				console.log(erro);
-			});});
 		
-		$('#nome').autocomplete({
-			data: dataNome,
+//		$('#nome').autocomplete({
+//			data: dataNome,
 //			data: {
 //		      "Apple": null,
 //		      "Microsoft": null,
 //		      "Google": 'https://placehold.it/250x250'
 //		    },
-		    limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
-		    onAutocomplete: function(val) {
-		      // Callback function when value is autcompleted.
-		    }, minLength: 2, // The minimum length of the input for the autocomplete to start. Default: 1.
-		  });
+			
+//		    limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
+//		    onAutocomplete: function(val) {
+//		      // Callback function when value is autcompleted.
+//		    }, minLength: 2, // The minimum length of the input for the autocomplete to start. Default: 1.
+//		  });
 
 		
 //-------------------------------------------------------------------------------------------		
 		
-		myDB.transaction(function(tx) {
-			tx.executeSql('SELECT * from plataforma', [], function(tx, rs){
-				//$('#console').material_select('destroy');
+		db.collection("plataforma")//.where("nome","==",nomeJogo)
+		.get().then(function (lista){
+			lista.forEach(function(doc) {
+				var opcao = '<option value='+doc.id+'>'+doc.data().nome+'</option>';
+				$('#console').append(opcao);
 				$('#console').material_select();
-				for(cont = 0; cont < rs.rows.length; cont++){
-					//console.log(rs.rows.item(cont).nome)
-					var opcao = '<option value='
-						+rs.rows.item(cont).nome
-						+'>'+rs.rows.item(cont).nome+'</option>';
-					$('#console').append(opcao);
-					$('#console').material_select();
-				}
+	        });
 
-			},function(erro){
-				console.log(erro);
-			});
 		});
+
+
 	});
 	
 	$('#console').material_select();

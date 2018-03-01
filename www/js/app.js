@@ -273,27 +273,17 @@ function getPlataforma(){
 		});
 }
 
-function getJogos(){
+console.log(getJogo("Akinator"));
+//		db.collection("jogos").get().then({ includeQueryMetadataChanges: true }, function(snapshot) {       
+//			snapshot.docChanges.forEach(function(change) {
+//				console.log('change',change);
+//				adicionaJogoTelaInicial(change.doc.data());
+//				if (change.type === "added") {console.log("New city: ", change.doc.data());}
+//				
+//				var source = snapshot.metadata.fromCache ? "local cache" : "server";           
+//				console.log("Data came from " + source);       });   
+//			});
 	
-//	db.collection("jogos").get().then(function (lista){
-//			console.log("lista:"+lista);
-//			lista.forEach(function(doc){ 
-//				if(doc && doc.exists){
-//					console.log(doc.data());
-//					console.log(doc.data().nome);
-//					adicionaJogoTelaInicial(doc.data());
-//				}});});
+
 	
-		db.collection("jogos").get().then({ includeQueryMetadataChanges: true }, function(snapshot) {       
-			snapshot.docChanges.forEach(function(change) {
-				console.log('change',change);
-				adicionaJogoTelaInicial(change.doc.data());
-				if (change.type === "added") {console.log("New city: ", change.doc.data());}
-				
-				var source = snapshot.metadata.fromCache ? "local cache" : "server";           
-				console.log("Data came from " + source);       });   
-			});
-	
-}
-	
-getJogos();
+//getJogos();
