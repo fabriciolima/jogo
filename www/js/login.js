@@ -36,11 +36,12 @@ function telaLogin(){
 	document.addEventListener('deviceready', function(){
 		var storage = window.localStorage;
 		var idCliente = storage.getItem('idCliente');
+		window.location = "index2.html";
 		//loginGoogle();
 		if(idCliente != null)
 			window.location = "index2.html";
 		else{
-			loginGoogle();
+//			loginGoogle();
 		}
 	});
 };

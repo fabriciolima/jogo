@@ -29,14 +29,17 @@
 	        // ...
 	    }
 	});
-	
-//	const docCliente = db.doc("cliente/ninguem");
-//	docCliente.set({
-//		nome: "ninguem"
-//	}).then(function(){console.log("salvo");})
-//		.catch(function(erro){
-//			console.log(erro);
-//		});
+//  const db.collection("plataforma/1").set({id: 1, nome: "Outros"}).then(function(){console.log("salvo");});
+//  db.collection("plataforma").doc("2").set({id: 2, nome: "Playstation 1"}).then(function(){console.log("salvo");});
+    
+	const docCliente = db.doc("plataforma/Outros");
+	docCliente.set({
+		id:0,
+		nome: "Outros"
+	}).then(function(){console.log("salvo");})
+		.catch(function(erro){
+			console.log(erro);
+		});
 	
 //	
 //	docCliente.get().then(function (doc){

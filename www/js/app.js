@@ -33,131 +33,21 @@ $('.atualiza').on('click',function(){
                 return false;
             });
 
-$('.galeria').on('click', function() {
 
-	navigator.camera.getPicture(onSuccess, onFail, { quality: 25,
-	    destinationType: Camera.DestinationType.DATA_URL
-	});
-	
-	function onSuccess(imageData) {
-		var image = document.getElementById('myImage');
-		
-		//image.src = "data:image/jpeg;base64," + imageData;
-	    console.log("ok2");
-		$.post("http://localhost:8080/servlet-0.0.1-SNAPSHOT/json",
-			    {
-			        nome: "Subindo foto",
-			        teste:"dfgdsfgsdfg",
-			        foto: imageData
-			    },
-			    function(data, status){
-			        alert("Data: " + data + "\nStatus: " + status);
-			    });
-
-	}
-
-	function onFail(message) {
-		alert('falha pq: ' + message);
-	}
-});
-
-
-
-
-
-$('.teste').on('click',function() {
-	
-	var pictureSource;   // picture source
-    var destinationType; // sets the format of returned value 
-
-    // Wait for Cordova to connect with the device
-    //
-    document.addEventListener("deviceready",onDeviceReady,false);
-
-    // Cordova is ready to be used!
-    //
-    function onDeviceReady() {
-        pictureSource=navigator.camera.PictureSourceType;
-        destinationType=navigator.camera.DestinationType;
-    }
-
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoDataSuccess(imageData) {
-      // Uncomment to view the base64 encoded image data
-      // console.log(imageData);
-
-      // Get image handle
-      //
-      var smallImage = document.getElementById('smallImage');
-
-      // Unhide image elements
-      //
-      smallImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      smallImage.src = "data:image/jpeg;base64," + imageData;
-    }
-
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoURISuccess(imageURI) {
-      // Uncomment to view the image file URI 
-      // console.log(imageURI);
-
-      // Get image handle
-      //
-      var largeImage = document.getElementById('largeImage');
-
-      // Unhide image elements
-      //
-      largeImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      largeImage.src = imageURI;
-    }
-
-    // A button will call this function
-    //
-    function capturePhoto() {
-      // Take picture using device camera and retrieve image as base64-encoded string
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-        destinationType: destinationType.DATA_URL });
-    }
-
-    // A button will call this function
-    //
-    function capturePhotoEdit() {
-      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
-        destinationType: destinationType.DATA_URL });
-    }
-
-    // A button will call this function
-    //
-    function getPhoto(source) {
-      // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
-        destinationType: destinationType.FILE_URI,
-        sourceType: source });
-    }
-
-    // Called if something bad happens.
-    // 
-    function onFail(message) {
-      alert('Failed because: ' + message);
-    }
-
-});
 
 $('.cadastro-jogo').on('click', function() {
+	console.log('cadastr');
 	   window.location = "cadastroJogo.html";
     
 });
+
+function cadastro() {
+	console.log('cadastr');
+	window.location = "cadastroJogo.html";
+    
+}
+
+
 //
 //$.getJSON("http://localhost:8080/json/plataforma",
 //		function(data) {
@@ -371,7 +261,7 @@ function nomePlataforma(idPlataforma){
 	
 }
 
-getPlataforma(){
+function getPlataforma(){
 	db.collection("plataforma").get().then({ includeQueryMetadataChanges: true }, function(snapshot) {       
 		snapshot.docChanges.forEach(function(change) {
 			console.log('change',change);

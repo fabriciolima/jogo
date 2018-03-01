@@ -39,20 +39,18 @@ $('.foto').on('click', function() {
 $('form').submit(function(){
 	var storage = window.localStorage;
     var postData = $(this).serialize();
-    postData += '&idCliente='+storage.getItem('idCliente');
-    
-    $('#idCliente').html(storage.getItem('idCliente'));
-    
     console.log(postData);
-    
-    $.post(getJSON()+"/add",
-    		postData,
-		    function(data, status){
-		        console.log("Data: " + data + "\nStatus: " + status);
-		        addMeuJogo(data,
-		        		$('#nome').val(),
-		        		$('#estado').val());
-		    });
+    idCliente = storage.getItem('idCliente');
+    const docCliente = db.doc(clientes+"/"+idCliente+"jogoCliente/"+storage.getItem('idCliente'));
+	docCliente.set({
+		id:0,
+		nome: "Outros"
+	}).then(function(){console.log("salvo");})
+		.catch(function(erro){
+			console.log(erro);
+		});
+	
+        
 
     return false;
 });
@@ -94,6 +92,38 @@ function clickfunc(object) {
 	}
 	}
 
+
+function autocompletajogo(){
+	nomeJogo = $('#nome').val();
+//	if($('#nome').val().length > 3)
+	{
+	
+//		var jogo = 	db.collection("jogo");
+//		jogo.orderBy("nome").limit(3);
+//		jogo.where("nome",">=",nomeJogo).get().then({ includeQueryMetadataChanges: true }, function(snapshot) {
+//			console.log(snapshot)
+//		snapshot.docChanges.forEach(function(change) {
+//			console.log('change',change);
+//			console.log(change.doc.data());
+////			adicionaJogoTelaInicial(change.doc.data());
+//			if (change.type === "added") {console.log("New city: ", change.doc.data());}
+//			
+//			var source = snapshot.metadata.fromCache ? "local cache" : "server";           
+//			console.log("Data came from " + source);       });   
+//		});;
+
+//	$('#nome').autocomplete({
+//		data: {
+//	      "Apple": null,
+//	      "Microsoft": null,
+//	      "Google": 'https://placehold.it/250x250'
+//	    },
+//	    limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
+//	    onAutocomplete: function(val) {
+//	    }, minLength: 2, // The minimum length of the input for the autocomplete to start. Default: 1.
+//  });
+	}
+}
 
 function atualizaCadastro(){
 	document.addEventListener('deviceready', function(){
