@@ -92,30 +92,35 @@ function adicionaJogoTelaInicial(data) {
 function adicionaMeuJogoTelaInicial(data) {
 	var items = [];
 //	console.log(data);
-	items.push('<div class="col s12 m7">'
-			+ '<h2 class="header">Jogo perto</h2>'
-			+ '<div class="card horizontal">'
-			+ '<div class="card-image">'
-//			+ '	<img src="img/plataforma50/2_50.PNG"> '
-			+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
-			+ '</div>'
-			+ '<div class="card-stacked">'
-			+ '	<div class="card-content">'
-			+ '		<p>'
-			+ '<h6>'+nomePlataforma(data.idPlataforma)+'</h6>'
-			+ '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
-			+ data.id
-			+ '</p>'
-			+ '	</div>'
-			+ '	<div class="card-action">'
-			+ '		<a href="#">This is a link</a>'
-			+ '	</div>'
-			+ '</div>'
-			+ '</div>' + '</div>');
-	$('<ul/>', {'class' : 'my-new-list',
-		html : items.join('')
-	}).appendTo('#meusjogos');
-//		}).appendTo('body');
+	nomejogo = "";
+	db.doc("jogo/"+data.idjogo).get().then(function(doc){
+		console.log(doc.data());nomejogo = doc.data().nome
+	console.log(nomejogo);
+		items.push('<div class="col s12 m7">'
+				+ '<h2 class="header">Jogo perto</h2>'
+				+ '<div class="card horizontal">'
+				+ '<div class="card-image">'
+	//			+ '	<img src="img/plataforma50/2_50.PNG"> '
+				+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
+				+ '</div>'
+				+ '<div class="card-stacked">'
+				+ '	<div class="card-content">'
+				+ '		<p>'
+				+ '<h6>'+doc.data().nome+'</h6>'
+				+ '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
+				+ doc.data().nome
+				+ '</p>'
+				+ '	</div>'
+				+ '	<div class="card-action">'
+				+ '		<a href="#">This is a link</a>'
+				+ '	</div>'
+				+ '</div>'
+				+ '</div>' + '</div>');
+		$('<ul/>', {'class' : 'my-new-list',
+			html : items.join('')
+		}).appendTo('#meusjogos');
+	//		}).appendTo('body');
+	});
 };
 
 
@@ -144,24 +149,11 @@ var $filter = 'today';
 
 function getMeusJogos(){
 	document.addEventListener('deviceready', function(){
-		$.ajax({
-	              type: "GET",
-	              url: getJSON()+"/meusjogos",
-	              data: { 
-	                  idCliente:9	                  
-	              },
-	              crossDomain: false,
-	              cache: false,
-	              dataType: "json",
-	              success: function(data){
-	            	  $.each(data,function(key, val) {
-	      					//console.log('jogo2:'+val.id);
-//	            		  //atualizaMeuJogoDB(data.content[cont]);
-	      				  adicionaMeuJogoTelaInicial(val);
-	            	  });
-	                  
-	              }
-	          });
+		db.collection("jogotroca").where("idcliente","==","1").get().then(function(lista){
+			lista.forEach(function(doc) {
+				adicionaMeuJogoTelaInicial(doc.data());				
+			});
+		});		
 	});
 }
 

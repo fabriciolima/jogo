@@ -61,6 +61,7 @@ $('form').submit(function(){
     console.log($('#dinheiro').val()?$('#dinheiro').val():"");
     
     db.collection("jogotroca").add({
+    	idcliente:idCliente,
 		console:$('#console').val(),
 		estado:$('#estado').val(),
 		idjogo:idJogo,
