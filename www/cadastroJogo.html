@@ -73,8 +73,8 @@
 				</div>
 				<div class="row">
 					<div class="input-field col s12">
-						<input type="text" id="nome" name="nome" class="autocomplete" onkeypress="autocompleta()" required>
-          				<label for="jogo">Nome do item para troca</label>
+						<input type="text" name="nome" id="nome" placeholder="Type Something" list="searchresults" autocomplete="off">
+						<datalist id="searchresults"></datalist>
 					</div>
 				</div>
 				<div class="row">
@@ -87,7 +87,7 @@
 				<div class="row">
 					<div class="input-field col s12">
 						<i class="material-icons prefix">mode_edit</i>
-						<textarea name="comentario" id="icon_prefix2"
+						<textarea name="comentario" id="comentario"
 							class="materialize-textarea"></textarea>
 						<label for="icon_prefix2">Comentários</label>
 					</div>

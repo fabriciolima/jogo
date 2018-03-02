@@ -42,41 +42,32 @@ $('form').submit(function(){
 	var storage = window.localStorage;
     var postData = $(this).serialize();
     idCliente = 1;//storage.getItem('idCliente');
-    nomeJogo = $('#nome').val().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    nomeJogoNormal = $('#nome').val().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    nomeJogo = $('#nome').val();
     
     idJogo=0;
-    db.doc("jogo2/"+nomeJogo).get().then(function(doc){idJogo=doc.id})
+    //verifica se ja tem o jogo cadastrado
+	db.doc("jogo2/"+nomeJogoNormal).get().then(function(doc){idJogo=doc.id})
     .catch(function(erro){
-    	db.collection("jogo2").doc(nomejogo).set({nome: nomeJogo})
+    	db.collection("jogo2").doc(nomeJogoNormal).set({nome: nomeJogo})
     	.then(function(doc){idJogo=doc.id});
-    })
-
-    console.log(idCliente);
+    });
+	
+	console.log(idCliente);
     console.log($('#console').val());
     console.log($('#estado').val());
     console.log(idJogo + ','+nomeJogo);
-    console.log($('#comentario').val());
-    console.log($('#dinheiro').val());
+    console.log($('#comentario').val()?$('#comentario').val():"");
+    console.log($('#dinheiro').val()?$('#dinheiro').val():"");
     
     db.collection("jogotroca").add({
 		console:$('#console').val(),
 		estado:$('#estado').val(),
-		idjogo:idJogo,//errado
+		idjogo:idJogo,
 		comentario:$('#comentario').val(),
 		dinheiro:$('#dinheiro').val()}
     ).then(function(){console.log("salvo");})
 		.catch(function(erro){console.log(erro);});
-    
-    console.log();
-    
-//    db.collection("plataforma")
-//    	.add(
-//    			{nome: "Playstation 1"})
-//    			.then(function(){console.log("salvo");});
-    
-    
-	
-        
 
     return false;
 });
@@ -118,34 +109,8 @@ function clickfunc(object) {
 	}
 	}
 
-
-function autocompleta(){
-	nomeJogo = $('#nome').val().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-//	if($('#nome').val().length > 3)
-	{
-//		data = "";
-//		db.collection("jogo").where("nome",">=",nomeJogo).limit(3).get().then(function (lista){
-//			lista.forEach(function(doc){ 
-//				console.log(doc.data());
-//				if(data != "")
-//					data = data+',"'+doc.data().nome+'":null';
-//				else
-//					data = '{"'+doc.data().nome+'":null';
-//			});
-//			data += "}";
-//			
-//			console.log(data);
-//		});
-//		$('#nome').autocomplete({
-//			data:data,
-//			limit: 3, // The max amount of results that can be shown at once. Default: Infinity.
-//			onAutocomplete: function(val) {
-//			}, minLength: 2, // The minimum length of the input for the autocomplete to start. Default: 1.
-//		});
-			
-			
-
-		};
+    
+		
 		
 //		var jogo = 	db.collection("jogo");
 //		jogo.orderBy("nome").limit(3);
@@ -162,27 +127,24 @@ function autocompleta(){
 //		});;
 
 	
-	
-}
 
-function atualizaCadastro(){
+
+function atualizaCadastro()
+{
 	document.addEventListener('deviceready', function(){
+
 		
 //--------------------------------------------------------------------------------------------
 		
 //		$('#nome').autocomplete({
-//			data: dataNome,
-//			data: {
-//		      "Apple": null,
-//		      "Microsoft": null,
-//		      "Google": 'https://placehold.it/250x250'
-//		    },
-			
-//		    limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
-//		    onAutocomplete: function(val) {
-//		      // Callback function when value is autcompleted.
-//		    }, minLength: 2, // The minimum length of the input for the autocomplete to start. Default: 1.
-//		  });
+//			data:{
+//				"007 Racing":null,
+//				"007: The World Is Not Enough":null,
+//				"007: Tomorrow Never Dies":null},
+//				limit: 3, // The max amount of results that can be shown at once. Default: Infinity.
+//				onAutocomplete: function(val) {
+//				}, minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
+//		});
 
 		
 //-------------------------------------------------------------------------------------------		
@@ -212,4 +174,28 @@ function mostrandoCadastro(){
 	
 	
 }
+
+
+$("#nome").on("input", function(e) {
+	var val = $(this).val();
+	console.log(0);
+	nomeJogo = val.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+//	if(val === "") return;
+	//You could use this to limit results
+	//if(val.length < 3) return;
+
+	console.log(val);
+	db.collection("jogo").where("nome",">=",nomeJogo).limit(3).get().then(function (lista){
+		console.log(1);
+		
+	     var dataList = $("#searchresults");
+		dataList.empty();
+		lista.forEach(function(doc){
+		console.log(doc);
+		var opt = $("<option></option>").attr("value", doc.data().nome);
+		dataList.append(opt);
+	});
+	})
+	
+}); 
 

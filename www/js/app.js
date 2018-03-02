@@ -36,17 +36,9 @@ $('.atualiza').on('click',function(){
 
 
 $('.cadastro-jogo').on('click', function() {
-	console.log('cadastr');
 	   window.location = "cadastroJogo.html";
     
 });
-
-function cadastro() {
-	console.log('cadastr');
-	window.location = "cadastroJogo.html";
-    
-}
-
 
 //
 //$.getJSON("http://localhost:8080/json/plataforma",
@@ -273,7 +265,6 @@ function getPlataforma(){
 		});
 }
 
-console.log(getJogo("Akinator"));
 //		db.collection("jogos").get().then({ includeQueryMetadataChanges: true }, function(snapshot) {       
 //			snapshot.docChanges.forEach(function(change) {
 //				console.log('change',change);
