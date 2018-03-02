@@ -13,6 +13,7 @@ function onSuccess(position) {
     console.log('sucesso mapa');
 	var lat=position.coords.latitude;
     var long=position.coords.longitude;
+    alert(lat);
 
     //Google Maps
     var myLatlng = new google.maps.LatLng(lat,long);
@@ -57,7 +58,7 @@ function localizacao(){
 
 	criarDBGPS();
 	history.go(-1);
-	//alert(marker.position);
+	alert(marker.position);
 	//alert(marker.getPosition().lng().toFixed(6));
 	//criarDBGPS();
 	//alert('db gps ok');

@@ -94,8 +94,7 @@ function adicionaMeuJogoTelaInicial(data) {
 //	console.log(data);
 	nomejogo = "";
 	db.doc("jogo/"+data.idjogo).get().then(function(doc){
-		console.log(doc.data());nomejogo = doc.data().nome
-	console.log(nomejogo);
+		
 		items.push('<div class="col s12 m7">'
 				+ '<h2 class="header">Jogo perto</h2>'
 				+ '<div class="card horizontal">'
@@ -149,7 +148,7 @@ var $filter = 'today';
 
 function getMeusJogos(){
 	document.addEventListener('deviceready', function(){
-		db.collection("jogotroca").where("idcliente","==","1").get().then(function(lista){
+		db.collection("jogotroca").where("idcliente","==","n4sC21hwIab3wFZiFcM9").get().then(function(lista){
 			lista.forEach(function(doc) {
 				adicionaMeuJogoTelaInicial(doc.data());				
 			});
@@ -179,7 +178,7 @@ $(document).scroll(function(e){
 
               if(b < 300) {
                   $currentPage = $currentPage + 1;
-                  getJogosPorPerto();
+                  getJogosPorPerto(page);
               }
           }
       });
@@ -194,9 +193,47 @@ $(document).scroll(function(e){
 
 //getJogosPorPerto();
 getMeusJogos();
-getJogosPorPerto2();
-function getJogosPorPerto2(){
+google.maps.event.addDomListener(window, 'load', function(){
+	navigator.geolocation.getCurrentPosition(cadastracliente, null, { timeout: 3000 });});
+//function getJogosPorPerto(){}
+//
+function cadastracliente(position){
+	var storage = window.localStorage;
+	storage.setItem('lat',position.coords.latitude.toFixed(6));
+	storage.setItem('lon',position.coords.longitude.toFixed(6));
+
+	var lat=position.coords.latitude.toFixed(6);
+    var long=position.coords.longitude.toFixed(6);
+    
+	    //if(lat != 0)
+    dados={nome:lat,
+    		telefone:"23423423",
+    		localizacao: new firebase.firestore.GeoPoint(position.coords.latitude, position.coords.longitude)};
+	    	
+	    	db.collection("cliente").add(dados)
+							.then(function(doc){
+								console.log("salvo db");
+								dados["localizacao"] = lat +' '+ long ;
+								salvaClienteJSon(dados)})
+							.catch(function(erro){console.log(erro);});
 	
+}
+
+function salvaClienteJSon(dados){
+	console.log("dados:",dados);
+	$.post(getJSON()+"/cliente/add",dados,function(data, status)
+		    {
+				if(status=='success'){
+					if(data=='erro')
+						alert('Erro. Tente novamente mais tarde');
+					else{
+						console.log("Data: " + data);
+					}
+					
+				}
+				else
+					console.log("Data: " + data + "\nStatus: " + status);
+			});
 }
 
 function getImagemJogo(idJogo){

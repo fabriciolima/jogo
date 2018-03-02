@@ -14,9 +14,14 @@ function getDB(){
 
 function getJSON(){
 	if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
-		return "http://192.168.15.7:8080/json";
-	} else
-		return "http://localhost:8080/json";
+		db.doc("config/servidor").get().then(function(doc){
+			console.log("retornando remoto");
+			return doc.data().ip;
+		});
+		
+	}
+	console.log("retornando localhost");
+	return "http://localhost:8080/json";
 }
 
 $('.botao-voltar').on('click', function() {
