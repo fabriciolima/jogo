@@ -67,48 +67,24 @@ $('form').submit(function(){
 		idjogo:idJogo,
 		comentario:$('#comentario').val(),
 		dinheiro:$('#dinheiro').val()}
-    ).then(function(){Materialize.toast('Jogo Salvo', 4000);})
-		.catch(function(erro){console.log(erro);});
+    ).then(function(){
+    	Materialize.toast('Jogo Salvo', 4000);
+    	$.post(getJSON+"/add/jogo",{
+        	idcliente:idCliente,
+    		console:$('#console').val(),
+    		estado:$('#estado').val(),
+    		idjogo:idJogo,
+    		comentario:$('#comentario').val(),
+    		dinheiro:$('#dinheiro').val()
+    		},function(data, status){
+    			Materialize.toast("erro json: " + data + "\nStatus: " + status);
+			    });
+    	voltar();	
+    }).catch(function(erro){Materialize.toast('Erro salvando', 4000);});
 
     return false;
 });
 
-function addMeuJogo(id,nome,estado){
-	var db = getDB();
-	console.log(jogo);
-	db.transaction(function(transaction) {
-		transaction.executeSql('insert or replace into jogoCliente(id, nomeJogo, estado) VALUES(?,?,?)',
-				[id,nome,estado]);
-	});
-	
-}
-
-
-function clickfunc(object) {
-	$("#valueId").empty();
-	
-	var valueId= "";
-	var valueIdName= $("#valueEnter").val();
-	if (valueIdName.length > 2) {
-		alert("consultando: ");
-	    var select = '%' + valueIdName+ '%';
-	    myDB.transaction(function (transaction) {
-	        transaction.executeSql('SELECT titulo FROM jogos WHERE NAME LIKE "' + valueIdName+ '";', [],
-	            function (transaction, results) {
-	                if (results != null && results.rows != null) {
-	                    if (results.rows.length > 0) {
-	                        for (var i = 0; i < results.rows.length; i++) {
-	                            var code = results.rows.item(i).NAME;
-	                            alert("resultado: "+code);
-	                            valueId+= '<li data-filtertext="' + code + '"><a href="#">' + code + '</a></li>'
-	                        }
-	                        $("#valueId").append(valueId).selectmenu('refresh', true);
-	                    } 
-	                }
-	            });
-	    });
-	}
-	}
 
     
 		
@@ -133,19 +109,6 @@ function clickfunc(object) {
 function atualizaCadastro()
 {
 	document.addEventListener('deviceready', function(){
-
-		
-//--------------------------------------------------------------------------------------------
-		
-//		$('#nome').autocomplete({
-//			data:{
-//				"007 Racing":null,
-//				"007: The World Is Not Enough":null,
-//				"007: Tomorrow Never Dies":null},
-//				limit: 3, // The max amount of results that can be shown at once. Default: Infinity.
-//				onAutocomplete: function(val) {
-//				}, minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-//		});
 
 		
 //-------------------------------------------------------------------------------------------		

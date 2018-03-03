@@ -10,11 +10,9 @@ function getLocation(){
 
 function onSuccess(position) {
 	
-    console.log('sucesso mapa');
-	var lat=position.coords.latitude;
+    var lat=position.coords.latitude;
     var long=position.coords.longitude;
-    alert(lat);
-
+    
     //Google Maps
     var myLatlng = new google.maps.LatLng(lat,long);
     var mapOptions = {zoom: 14,center: myLatlng,
