@@ -148,7 +148,8 @@ var $filter = 'today';
 
 function getMeusJogos(){
 	document.addEventListener('deviceready', function(){
-		db.collection("jogotroca").where("idcliente","==","n4sC21hwIab3wFZiFcM9").get().then(function(lista){
+		db.collection("jogotroca")//.where("idcliente","==","n4sC21hwIab3wFZiFcM9")
+		.get().then(function(lista){
 			lista.forEach(function(doc) {
 				adicionaMeuJogoTelaInicial(doc.data());				
 			});

@@ -67,7 +67,7 @@ $('form').submit(function(){
 		idjogo:idJogo,
 		comentario:$('#comentario').val(),
 		dinheiro:$('#dinheiro').val()}
-    ).then(function(){console.log("salvo");})
+    ).then(function(){Materialize.toast('Jogo Salvo', 4000);})
 		.catch(function(erro){console.log(erro);});
 
     return false;
