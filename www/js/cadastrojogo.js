@@ -39,9 +39,9 @@ $('.foto').on('click', function() {
 $('form').submit(function(){
 
 
-	var storage = window.localStorage;
+	var local = window.localStorage;
     var postData = $(this).serialize();
-    idCliente = 1;//storage.getItem('idCliente');
+    idCliente = 1;//local.getItem('idCliente');
     nomeJogoNormal = $('#nome').val().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
     nomeJogo = $('#nome').val();
     
@@ -60,7 +60,7 @@ $('form').submit(function(){
     console.log($('#comentario').val()?$('#comentario').val():"");
     console.log($('#dinheiro').val()?$('#dinheiro').val():"");
     
-    db.collection("jogotroca").add({
+    db.collection("jogocliente").add({
     	idcliente:idCliente,
 		console:$('#console').val(),
 		estado:$('#estado').val(),

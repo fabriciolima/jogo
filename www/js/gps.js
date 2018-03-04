@@ -81,9 +81,9 @@ function ocultandoMapa(){
 }
 
 function criarDBGPS() {
-	var storage = window.localStorage;
-	storage.setItem('lat',marker.getPosition().lat().toFixed(6));
-	storage.setItem('lon',marker.getPosition().lng().toFixed(6));
+	var local = window.localStorage;
+	local.setItem('lat',marker.getPosition().lat().toFixed(6));
+	local.setItem('lon',marker.getPosition().lng().toFixed(6));
 	
 	console.log('criarDBGPS');
 //	var myDB = window.openDatabase("jogoDB.db",'1','auto',1024*1024*100);
@@ -100,10 +100,10 @@ function criarDBGPS() {
 
 
 function lerDBGPS() {
-	var storage = window.localStorage;
-	if(storage.getItem('lon')!=null){
-		document.getElementById('localizacao').value = storage.getItem('lon') + " " + storage.getItem('lat');
-		document.getElementById('localizacaoGPS').value = storage.getItem('lon') + " " + storage.getItem('lat');
+	var local = window.localStorage;
+	if(local.getItem('lon')!=null){
+		document.getElementById('localizacao').value = local.getItem('lon') + " " + local.getItem('lat');
+		document.getElementById('localizacaoGPS').value = local.getItem('lon') + " " + local.getItem('lat');
 	}
 	else{
 		document.getElementById('localizacao').value = '0 0';

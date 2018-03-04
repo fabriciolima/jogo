@@ -13,6 +13,8 @@
   };
   firebase.initializeApp(config);
   var db = firebase.firestore();
+  
+  var teste;
   firebase.firestore().enablePersistence()
 	.then(function() {
 	    console.log('offline');

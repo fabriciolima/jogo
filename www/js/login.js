@@ -14,9 +14,9 @@ function loginGoogle(){
 	  // The signed-in user info.
 	  var user = result.user;
 	  console.log(user);
-	  var storage = window.localStorage;
-	  storage.setItem('idCliente', user.uid);  
-	  storage.setItem('nome', user.displayName);
+	  var local = window.localStorage;
+	  local.setItem('idCliente', user.uid);  
+	  local.setItem('nome', user.displayName);
 	}).catch(function(error) {
 		console.log(error);
 
@@ -34,8 +34,8 @@ function loginGoogle(){
 
 function telaLogin(){
 	document.addEventListener('deviceready', function(){
-		var storage = window.localStorage;
-		var idCliente = storage.getItem('idCliente');
+		var local = window.localStorage;
+		var idCliente = local.getItem('idCliente');
 		window.location = "index2.html";
 		//loginGoogle();
 		if(idCliente != null)
@@ -47,7 +47,7 @@ function telaLogin(){
 };
 
 //$('form').submit(function(){
-//	var storage = window.localStorage;
+//	var local = window.localStorage;
 //    var postData = $(this).serialize();
 //    console.log('post:'+postData);
 //    console.log("tel:"+$('#telefone').val());
