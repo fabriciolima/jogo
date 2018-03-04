@@ -1,4 +1,10 @@
+console.log("---------------");
+//  console.log(storage.ref("jogo90/1076_90.png"));
+var storage = firebase.storage().ref();
 
+console.log(storage.child('jogo90/1076_90.png'));
+  console.log(storage.refFromURL("gs://jogos-usados.appspot.com/jogo90/1076_90.png"));
+  
 $('.collection')
     .on('click', '.collection-item', function(){
         var nomeProduto = this.firstChild.textContent;
@@ -63,6 +69,11 @@ $('.cadastro-jogo').on('click', function() {
 
 
 function adicionaJogoTelaInicial(data) {
+//	db.collection("jogocliente").doc(data.idJogoCliente).set({
+//			idcliente:data.idCliente,
+//			idjogo:data.idJogo,
+//			estadojogo:1,
+//			idplataforma:data.idPlataforma});
 	var items = [];
 	items.push('<div class="col s12 m7">'
 			+ '<h2 class="header">Jogo perto</h2>'
@@ -97,18 +108,18 @@ function adicionaJogoTelaInicial(data) {
 };
 
 function proporTroca(idJogoCliente,distancia){//},nomeJogo,nomePlataforma){
-	var storage = window.localStorage;
-	storage.setItem('idjogocliente',idJogoCliente);
-//	storage.setItem('nomeJogo',nomeJogo);
-//	storage.setItem('nomePlataforma',nomePlataforma);
-	storage.setItem('distancia',distancia);
+	var local = window.localStorage;
+	local.setItem('idjogocliente',idJogoCliente);
+//	local.setItem('nomeJogo',nomeJogo);
+//	local.setItem('nomePlataforma',nomePlataforma);
+	local.setItem('distancia',distancia);
 	window.location = "proposta.html";
 }
-function adicionaMeuJogoTelaInicial(jogotroca) {
+function adicionaMeuJogoTelaInicial(jogocliente) {
 	var items = [];
 //	console.log(data);
 	nomejogo = "";
-	db.doc("jogo/"+jogotroca.idjogo).get().then(function(doc){
+	db.doc("jogo/"+jogocliente.idjogo).get().then(function(doc){
 		if(doc && doc.exists){
 			items.push('<div class="col s12 m7">'
 					+ '<h2 class="header">Jogo perto</h2>'
@@ -187,7 +198,7 @@ function getJogosPorPerto(){
 
 function getMeusJogos(){
 	document.addEventListener('deviceready', function(){
-		db.collection("jogotroca")//.where("idcliente","==","n4sC21hwIab3wFZiFcM9")
+		db.collection("jogocliente")//.where("idcliente","==","n4sC21hwIab3wFZiFcM9")
 		.get().then(function(lista){
 			lista.forEach(function(doc) {
 				adicionaMeuJogoTelaInicial(doc.data());				
@@ -236,9 +247,9 @@ getMeusJogos();
 //	navigator.geolocation.getCurrentPosition(cadastracliente, null, { timeout: 3000 });});
 
 function cadastracliente(position){
-	var storage = window.localStorage;
-	storage.setItem('lat',position.coords.latitude.toFixed(6));
-	storage.setItem('lon',position.coords.longitude.toFixed(6));
+	var local = window.localStorage;
+	local.setItem('lat',position.coords.latitude.toFixed(6));
+	local.setItem('lon',position.coords.longitude.toFixed(6));
 
 	var lat=position.coords.latitude.toFixed(6);
     var long=position.coords.longitude.toFixed(6);

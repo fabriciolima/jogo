@@ -62,29 +62,22 @@
 	</div>
 	
 	
-	<div id="meusjogos" class="section">
+		<form class="col s12">
+			<div id="meusjogos" class="section">
+			</div>
+			<div class="row">
+					<div class="input-field col s12">
+						<button class="btn waves-effect waves-light" type="submit" name="action">
+							Cadastrar <i class="material-icons right">send</i>
+						</button>
+					</div>
+			</div>
+		</form>
 
 		<ul data-role="listview" id="SomeListView" class="tab"></ul>		
-	</div>
 
 
-	<div id="confirmacao" class="modal modal-fixed-footer">
-		<div class="modal-content">
-			<h5>Resumo do pedido</h5>
-			<input id="numero-mesa" type="number" class="validate"
-				placeholder="Número da mesa">
-			<blockquote id="resumo"></blockquote>
-		</div>
-		<div class="modal-footer">
-			<button class="btn deep-orange waves-effect waves-light modal-close">
-				Pedir</button>
-			<button
-				class="btn-flat waves-effect waves-red modal-close acao-limpar">
-				Cancelar</button>
-		</div>
-	</div>
-
-
+	
 	<!--         <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script> -->
 		<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
@@ -103,57 +96,7 @@
 	<script src="js/geral.js"></script>
 	<script src="js/proposta.js"></script>
 	<script src="js/material-refresh.min.js"></script>
-	
-	 <script type="text/javascript" charset="utf-8">
 
-;(function(){
-
-    $(document).on("touchstart", function(e){
-        /* e.preventDefault(); */
-    });
-}());
-
-    (function(){
-        // Init Type2 
-        mRefresh({
-            nav: '#navMain',
-            scrollEl: '#contentMain'
-        })
-        // Button on the top of page
-        $('#doRotate').on('tap click',function(){
-            mRefresh.refresh();   
-            return false;
-        });
-
-        // Content demo button
-        $('#buttonAction').on('tap click', function(){
-            mRefresh.refresh({
-                onBegin: function(){
-                    alert('It begin to rotate! You can do something like pull ajax data!');
-                }    
-                });
-            return false;
-        });   
-
-        // prevent browser scroll
-        $('#navMain').on('touchstart', function(e){
-             e.preventDefault();
-        });
-        // Handle the start of interactions
-        $('#contentMain').on('touchmove', function(e){
-            var el = document.getElementById("contentMain");
-            var startTopScroll = el.scrollTop;
-
-            if (startTopScroll <= 0) {
-                el.scrollTop = 1;
-            }
-            if(startTopScroll + el.offsetHeight >= el.scrollHeight) {
-                el.scrollTop = el.scrollHeight - el.offsetHeight - 1;
-            }
-        });
-
-    })();
-</script>
 
 </body>
 </html>
