@@ -23,7 +23,6 @@ function adicionaMeuJogoTelaInicial(data) {
 	nomejogo = "";
 	
 	db.doc("jogo/"+data.idjogo).get().then(function(doc){
-		console.log(doc.data().nome);
 		
 		items.push('<div class="col s12 m7">'
 				+ '<h2 class="header">Jogo perto</h2>'
@@ -35,9 +34,9 @@ function adicionaMeuJogoTelaInicial(data) {
 				+ '<div class="card-stacked">'
 				+ '	<div class="card-content">'
 				+ '		<p>'
-				+ '<h6>'+doc.data().nome+'</h6>'
+//				+ '<h6>'+doc.data().nome+'</h6>'
 //				+ '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
-				+ doc.data().nome
+//				+ doc.data().nome
 				+ '</p>'
 				+ '	</div>'
 				+ '	<div class="card-action">'
@@ -52,7 +51,40 @@ function adicionaMeuJogoTelaInicial(data) {
 	//		}).appendTo('body');
 	});
 };
-
+adicionaJogoInteresse();
+function adicionaJogoInteresse(){
+	items = [];
+	var storage = window.localStorage;
+	idjogocliente = storage.getItem('idjogocliente');
+	db.doc('jogocliente/'+idjogocliente).get().then(function(docjc){//busca jc
+		db.doc('jogo/'+docjc.data().idjogo).get().then(function (docjogo){
+			items.push('<div class="col s12 m7">'
+					+ '<h2 class="header">Jogo perto</h2>'
+					+ '<div class="card horizontal">'
+					+ '<div class="card-image">'
+//			+ '	<img src="img/plataforma50/2_50.PNG"> '
+//			+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
+					+ '</div>'
+					+ '<div class="card-stacked">'
+					+ '	<div class="card-content">'
+					+ '		<p>'
+					+ '<h6>'+docjogo.data().nome+'</h6>'
+//			+ '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
+					+ storage.getItem('nomePlataforma')
+					+ '</p>'
+					+ '	</div>'
+					+ '	<div class="card-action">'
+					+'  <span class="badge">'+storage.getItem('distancia')+'</span></div>'
+					+ '	</div>'
+					+ '</div>'
+					+ '</div></div>');
+			$('<ul/>', {'class' : 'my-new-list',
+				html : items.join('')
+			}).appendTo('#jogointeresse');
+			
+		}); //busca o jogo
+	});
+}
 
 function adicionaJogoInteressado() {
 	var items = [];

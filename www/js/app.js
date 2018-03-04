@@ -65,74 +65,78 @@ $('.cadastro-jogo').on('click', function() {
 function adicionaJogoTelaInicial(data) {
 	var items = [];
 	items.push('<div class="col s12 m7">'
-			+ '<h2 class="header">Horizontal Card</h2>'
+			+ '<h2 class="header">Jogo perto</h2>'
 			+ '<div class="card horizontal">'
 			+ '<div class="card-image">'
-			+ '	<img src="http://localhost:8080/servlet-0.0.1-SNAPSHOT/'
-			//+ val.imagem
-			+ '">'
+//			+ '	<img src="img/plataforma50/2_50.PNG"> '
+//			+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
 			+ '</div>'
 			+ '<div class="card-stacked">'
 			+ '	<div class="card-content">'
 			+ '		<p>'
-			+ data.nome
+			+ '<h6>'+data.nomeJogo+'</h6>'
+//			+ '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
+			+ data.nomePlataforma
 			+ '</p>'
 			+ '	</div>'
 			+ '	<div class="card-action">'
-			+ '		<a href="#">This is a link</a>'
+			+ '	<button class="btn waves-effect waves-light" type="submit" name="action" ' 
+			+'     onclick="proporTroca('+data.idJogoCliente+','+data.distancia
+//								+',\''+data.nomeJogo+'\',\''
+//								+data.nomePlataforma +'\',\''
+//								'\')
+								+')"> Propor troca <i class="material-icons right">shuffle</i> </button>'
+			+'  <span class="badge">'+data.distancia+'</span></div>'
 			+ '	</div>'
 			+ '</div>'
-			+ '</div>' + '</div>');
+			+ '</div></div>');
 	$('<ul/>', {'class' : 'my-new-list',
 		html : items.join('')
 	}).appendTo('#porperto');
 //		}).appendTo('body');
 };
 
-function adicionaMeuJogoTelaInicial(data) {
+function proporTroca(idJogoCliente,distancia){//},nomeJogo,nomePlataforma){
+	var storage = window.localStorage;
+	storage.setItem('idjogocliente',idJogoCliente);
+//	storage.setItem('nomeJogo',nomeJogo);
+//	storage.setItem('nomePlataforma',nomePlataforma);
+	storage.setItem('distancia',distancia);
+	window.location = "proposta.html";
+}
+function adicionaMeuJogoTelaInicial(jogotroca) {
 	var items = [];
 //	console.log(data);
 	nomejogo = "";
-	db.doc("jogo/"+data.idjogo).get().then(function(doc){
-		
-		items.push('<div class="col s12 m7">'
-				+ '<h2 class="header">Jogo perto</h2>'
-				+ '<div class="card horizontal">'
-				+ '<div class="card-image">'
-	//			+ '	<img src="img/plataforma50/2_50.PNG"> '
-				+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
-				+ '</div>'
-				+ '<div class="card-stacked">'
-				+ '	<div class="card-content">'
-				+ '		<p>'
-				+ '<h6>'+doc.data().nome+'</h6>'
-				+ '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
-				+ doc.data().nome
-				+ '</p>'
-				+ '	</div>'
-				+ '	<div class="card-action">'
-				+ '		<a href="#">This is a link</a>'
-				+ '	</div>'
-				+ '</div>'
-				+ '</div>' + '</div>');
-		$('<ul/>', {'class' : 'my-new-list',
-			html : items.join('')
-		}).appendTo('#meusjogos');
+	db.doc("jogo/"+jogotroca.idjogo).get().then(function(doc){
+		if(doc && doc.exists){
+			items.push('<div class="col s12 m7">'
+					+ '<h2 class="header">Jogo perto</h2>'
+					+ '<div class="card horizontal">'
+					+ '<div class="card-image">'
+		//			+ '	<img src="img/plataforma50/2_50.PNG"> '
+//					+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
+					+ '</div>'
+					+ '<div class="card-stacked">'
+					+ '	<div class="card-content">'
+					+ '		<p>'
+					+ '<h6>'+doc.data().nome+'</h6>'
+//					+ '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
+					+ doc.data().nome
+					+ '</p>'
+					+ '	</div>'
+					+ '	<div class="card-action">'
+					+ '		<a href="#">This is a link</a>'
+					+ '	</div>'
+					+ '</div>'
+					+ '</div>' + '</div>');
+			$('<ul/>', {'class' : 'my-new-list',
+				html : items.join('')
+			}).appendTo('#meusjogos');
+		}
 	//		}).appendTo('body');
 	});
 };
-
-
-function atualizaJogosDB(jogo){
-	var myDB =getDB();
-
-	myDB.transaction(function(transaction) {
-		transaction.executeSql('insert or replace into jogos(id, nome) VALUES(?,?)',
-				[jogo.id,
-				jogo.nome]);
-	});
-	
-}	
 
 
 
@@ -143,8 +147,43 @@ var $currentPage = 0;
 var $pageSize = 20;
 var scrollStop = 0;
 var $filter = 'today';
-
+getJogosPorPerto();
 //Ajax call
+function getJogosPorPerto(){
+	document.addEventListener('deviceready', function(){
+		$.ajax({
+	              type: "GET",
+	              url: getJSON()+"/jogosperto",
+	              data: { 
+	            	  pos:'0 0',
+	                  getJogosPorPerto: 1,
+	                  sortBy: 'name', 
+	                  sortOrder: 'ASC',
+	                  page: $currentPage,
+	                  size: $pageSize,
+	                  filterBy: $filter
+	              },
+	              crossDomain: false,
+	              cache: false,
+	              dataType: "json",
+	              beforeSend: function(){ 
+	                  scrollStop = 1;
+	              },
+	              success: function(data){
+	            	  console.log(data);
+	            	  for(cont = 0 ; cont < data.length; ++cont){
+	            		 // atualizaJogosDB(data.content[cont]);
+	            		  adicionaJogoTelaInicial(data[cont]);
+	            	  }
+	                  if(data != null) scrollStop = 0;
+	                   		else scrollStop = 1;
+	                  
+	              }
+	          });
+	});
+}
+
+
 
 function getMeusJogos(){
 	document.addEventListener('deviceready', function(){
@@ -169,7 +208,7 @@ function getMeusJogos(){
 //
 
 $(document).scroll(function(e){
-          if(scrollStop == 0){
+	      if(scrollStop == 0){
               var scrollAmount = $(window).scrollTop();
               var documentHeight = $('body').height();
               var viewPortHeight = $(window).height();
@@ -179,7 +218,7 @@ $(document).scroll(function(e){
 
               if(b < 300) {
                   $currentPage = $currentPage + 1;
-                  getJogosPorPerto(page);
+                  getJogosPorPerto();
               }
           }
       });
@@ -192,12 +231,10 @@ $(document).scroll(function(e){
 //          getJogosPorPerto();
 //      });
 
-//getJogosPorPerto();
 getMeusJogos();
-google.maps.event.addDomListener(window, 'load', function(){
-	navigator.geolocation.getCurrentPosition(cadastracliente, null, { timeout: 3000 });});
-//function getJogosPorPerto(){}
-//
+//google.maps.event.addDomListener(window, 'load', function(){
+//	navigator.geolocation.getCurrentPosition(cadastracliente, null, { timeout: 3000 });});
+
 function cadastracliente(position){
 	var storage = window.localStorage;
 	storage.setItem('lat',position.coords.latitude.toFixed(6));
@@ -221,7 +258,7 @@ function cadastracliente(position){
 }
 
 function salvaClienteJSon(dados){
-	console.log("dados:",dados);
+	console.log("salvando dados:",dados);
 	$.post(getJSON()+"/cliente/add",dados,function(data, status)
 		    {
 				if(status=='success'){
@@ -265,35 +302,7 @@ function getImagemPlataforma(id){
 	//return "img/plataforma50/15_50.JPG";
 	return "img/jogo90/"+id + "_90.png";
 }
-function nomePlataforma(idPlataforma){
-	retorno = "";
-	document.addEventListener('deviceready', function(){
-		var db=getDB();
-		//console.log('console:'+idPlataforma);
-		db.transaction(function(tx) {tx.executeSql('SELECT nome from plataforma where id = '+idPlataforma, [], function(tx, rs){
-			retorno = '11'+ rs.rows.item(0).nome;
-			//console.log('------'+retorno);
-			
-		},function(erro){
-			console.log(erro.message);
-		})
-		});
-	});
-	return retorno;
-	
-}
 
-function getPlataforma(){
-	db.collection("plataforma").get().then({ includeQueryMetadataChanges: true }, function(snapshot) {       
-		snapshot.docChanges.forEach(function(change) {
-			console.log('change',change);
-			adicionaJogoTelaInicial(change.doc.data());
-			if (change.type === "added") {console.log("New city: ", change.doc.data());}
-			
-			var source = snapshot.metadata.fromCache ? "local cache" : "server";           
-			console.log("Data came from " + source);       });   
-		});
-}
 
 //		db.collection("jogos").get().then({ includeQueryMetadataChanges: true }, function(snapshot) {       
 //			snapshot.docChanges.forEach(function(change) {
@@ -306,5 +315,3 @@ function getPlataforma(){
 //			});
 	
 
-	
-//getJogos();

@@ -21,7 +21,7 @@ function getJSON(){
 		
 	}
 	console.log("retornando localhost");
-	return "http://localhost:8080/json";
+	return "http://179.179.95.151:8080/json";
 }
 
 $('.botao-voltar').on('click', function() {
