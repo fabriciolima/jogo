@@ -1,10 +1,3 @@
-console.log("---------------");
-//  console.log(storage.ref("jogo90/1076_90.png"));
-var storage = firebase.storage().ref();
-
-console.log(storage.child('jogo90/1076_90.png'));
-  console.log(storage.refFromURL("gs://jogos-usados.appspot.com/jogo90/1076_90.png"));
-  
 $('.collection')
     .on('click', '.collection-item', function(){
         var nomeProduto = this.firstChild.textContent;
@@ -79,7 +72,7 @@ function adicionaJogoTelaInicial(data) {
 			+ '<h2 class="header">Jogo perto</h2>'
 			+ '<div class="card horizontal">'
 			+ '<div class="card-image">'
-//			+ '	<img src="img/plataforma50/2_50.PNG"> '
+			+ '	<img src="'+gerURLjogo90(data.idJogo)+'"> '
 //			+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
 			+ '</div>'
 			+ '<div class="card-stacked">'
@@ -181,7 +174,6 @@ function getJogosPorPerto(){
 	                  scrollStop = 1;
 	              },
 	              success: function(data){
-	            	  console.log(data);
 	            	  for(cont = 0 ; cont < data.length; ++cont){
 	            		 // atualizaJogosDB(data.content[cont]);
 	            		  adicionaJogoTelaInicial(data[cont]);
@@ -326,3 +318,28 @@ function getImagemPlataforma(id){
 //			});
 	
 
+const messaging = firebase.messaging();
+messaging.requestPermission()
+.then(function() {
+	console.log('Notification permission granted.');
+	console.log(messaging.getToken());
+	return messaging.getToken();
+}).then(function (token){
+	console.log("token",token);
+}).catch(function(err) {
+	console.log('Notification Unable.', err);
+});
+
+messaging.onMessage(function(payload){
+//Materialize.toast(payload, 4000);
+console.log("Mensagem", payload);
+})
+
+document.addEventListener('deviceready', function(){
+window.FirebasePlugin.getToken(function(token) {
+    // save this server-side and use it to push notifications to this device
+    console.log(token,token);
+}, function(error) {
+    console.error(error);
+});
+});

@@ -85,6 +85,7 @@
         <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="Show your location on the map" />
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="Trace your location on the map" />
     </plugin>
+    <plugin name="cordova-plugin-firebase" spec="^0.1.25" />
     <engine name="browser" spec="^5.0.1" />
     <engine name="android" spec="^7.0.0" />
 </widget>

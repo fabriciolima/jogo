@@ -14,6 +14,7 @@
   firebase.initializeApp(config);
   var db = firebase.firestore();
   
+  
   var teste;
   firebase.firestore().enablePersistence()
 	.then(function() {
@@ -83,6 +84,8 @@
 //	}, function (errorObject) {
 //	  console.log("The read failed: " + errorObject.code);
 //	});
+
+	
 	
 function getJogo(nomeJogo){
 		retorno=null;

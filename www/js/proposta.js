@@ -55,6 +55,9 @@ function adicionaMeuJogoTelaInicial(proposta) {
 };
 adicionaJogoInteresse();
 $('form').submit(function(){
+	var local = window.localStorage;
+	idjogocliente = local.getItem('idjogocliente');
+	console.log("idjogocliente",idjogocliente);
 	sList ="";
 	$('input[type=checkbox]').each(function () {
 	    sList += "(" + $(this).val() + "-" + (this.checked ? "checked" : "not checked") + ")";
