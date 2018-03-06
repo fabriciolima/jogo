@@ -193,11 +193,12 @@ getJogosPorPerto();
 // Ajax call
 function getJogosPorPerto(){
 	document.addEventListener('deviceready', function(){
+		console.log(000);
 		$.ajax({
 	              type: "GET",
 	              url: getJSON()+"/jogosperto",
 	              data: { 
-	            	  pos:'0 0',
+	            	  pos:getPointLocation(),
 	                  getJogosPorPerto: 1,
 	                  sortBy: 'name', 
 	                  sortOrder: 'ASC',
