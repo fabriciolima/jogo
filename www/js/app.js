@@ -1,3 +1,4 @@
+//window.location = "chat.html";
 $('.collection')
     .on('click', '.collection-item', function(){
         var nomeProduto = this.firstChild.textContent;
@@ -27,8 +28,12 @@ $('.botao-voltar').on('click', function() {
 });
 
 $('.atualiza').on('click',function(){
-                //mRefresh.refresh();   
-        refresh();
+                // mRefresh.refresh();
+        //refresh();
+	$("#porperto").empty();
+	$("#meusjogos").empty();
+	getJogosPorPerto();
+	getMeusJogos();
                 return false;
             });
 
@@ -40,55 +45,55 @@ $('.cadastro-jogo').on('click', function() {
 });
 
 //
-//$.getJSON("http://localhost:8080/json/plataforma",
-//		function(data) {
-//			var items = [];
-//			$.each(data,function(key, val) {
-//				console.log('plataforma'+val.nome);
-//				atualizaPlataformasDB(val);
-//		});
-//});
+// $.getJSON("http://localhost:8080/json/plataforma",
+// function(data) {
+// var items = [];
+// $.each(data,function(key, val) {
+// console.log('plataforma'+val.nome);
+// atualizaPlataformasDB(val);
+// });
+// });
 
 
-//$.getJSON(getJSON()+"/jogo",
-//		function(data) {
+// $.getJSON(getJSON()+"/jogo",
+// function(data) {
 //			
-//			$.each(data,function(key, val) {
-//				console.log('jogo:'+val.nome);
-//				atualizaJogosDB(val);
-//				adicionaJogoTelaInicial(val); 
-//		});
-//});
+// $.each(data,function(key, val) {
+// console.log('jogo:'+val.nome);
+// atualizaJogosDB(val);
+// adicionaJogoTelaInicial(val);
+// });
+// });
 
 
 function adicionaJogoTelaInicial(data) {
-//	db.collection("jogocliente").doc(data.idJogoCliente).set({
-//			idcliente:data.idCliente,
-//			idjogo:data.idJogo,
-//			estadojogo:1,
-//			idplataforma:data.idPlataforma});
+// db.collection("jogocliente").doc(data.idJogoCliente).set({
+// idcliente:data.idCliente,
+// idjogo:data.idJogo,
+// estadojogo:1,
+// idplataforma:data.idPlataforma});
 	var items = [];
 	items.push('<div class="col s12 m7">'
 			+ '<h2 class="header">Jogo perto</h2>'
 			+ '<div class="card horizontal">'
 			+ '<div class="card-image">'
 			+ '	<img src="'+gerURLjogo90(data.idJogo)+'"> '
-//			+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
+// + ' <img src="'+ getImagemPlataforma(data.id)+ '">'
 			+ '</div>'
 			+ '<div class="card-stacked">'
 			+ '	<div class="card-content">'
 			+ '		<p>'
 			+ '<h6>'+data.nomeJogo+'</h6>'
-//			+ '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
+// + '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
 			+ data.nomePlataforma
 			+ '</p>'
 			+ '	</div>'
 			+ '	<div class="card-action">'
 			+ '	<button class="btn waves-effect waves-light" type="submit" name="action" ' 
 			+'     onclick="proporTroca('+data.idJogoCliente+','+data.distancia
-//								+',\''+data.nomeJogo+'\',\''
-//								+data.nomePlataforma +'\',\''
-//								'\')
+// +',\''+data.nomeJogo+'\',\''
+// +data.nomePlataforma +'\',\''
+// '\')
 								+')"> Propor troca <i class="material-icons right">shuffle</i> </button>'
 			+'  <span class="badge">'+data.distancia+'</span></div>'
 			+ '	</div>'
@@ -97,62 +102,95 @@ function adicionaJogoTelaInicial(data) {
 	$('<ul/>', {'class' : 'my-new-list',
 		html : items.join('')
 	}).appendTo('#porperto');
-//		}).appendTo('body');
+// }).appendTo('body');
 };
 
-function proporTroca(idJogoCliente,distancia){//},nomeJogo,nomePlataforma){
+function proporTroca(idJogoCliente,distancia){// },nomeJogo,nomePlataforma){
 	var local = window.localStorage;
 	local.setItem('idjogocliente',idJogoCliente);
-//	local.setItem('nomeJogo',nomeJogo);
-//	local.setItem('nomePlataforma',nomePlataforma);
+// local.setItem('nomeJogo',nomeJogo);
+// local.setItem('nomePlataforma',nomePlataforma);
 	local.setItem('distancia',distancia);
 	window.location = "proposta.html";
 }
 function adicionaMeuJogoTelaInicial(jogocliente) {
 	var items = [];
-//	console.log(data);
+// console.log(data);
 	nomejogo = "";
-	db.doc("jogo/"+jogocliente.idjogo).get().then(function(doc){
+//	console.log("jc",doc);
+
+	db.doc("jogo/"+jogocliente.data().idjogo).get().then(function(doc){
 		if(doc && doc.exists){
 			items.push('<div class="col s12 m7">'
 					+ '<h2 class="header">Jogo perto</h2>'
 					+ '<div class="card horizontal">'
 					+ '<div class="card-image">'
-		//			+ '	<img src="img/plataforma50/2_50.PNG"> '
-//					+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
+					+'<img src="'+gerURLjogo90(doc.data().idJogo)+'"> '
 					+ '</div>'
 					+ '<div class="card-stacked">'
 					+ '	<div class="card-content">'
 					+ '		<p>'
 					+ '<h6>'+doc.data().nome+'</h6>'
-//					+ '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
+// + '<h5> '+nomePlataforma(data.idPlataforma)+'</h5>'
 					+ doc.data().nome
 					+ '</p>'
 					+ '	</div>'
-					+ '	<div class="card-action">'
+					+ '<div class="card-action">'
 					+ '		<a href="#">This is a link</a>'
+//					+' <span style="text-align:right">'
+					+'<div id="listainteressados_'+jogocliente.id+'" > </div>'
+//					+'</span> </p>'
 					+ '	</div>'
 					+ '</div>'
 					+ '</div>' + '</div>');
 			$('<ul/>', {'class' : 'my-new-list',
 				html : items.join('')
 			}).appendTo('#meusjogos');
+			botaoTemJogosParaTroca(jogocliente);
 		}
-	//		}).appendTo('body');
+	// }).appendTo('body');
 	});
 };
 
+function botaoTemJogosParaTroca(jogocliente){
+//	botao",db.collection("jogocliente").doc(jogocliente.id);
+	console.log(jogocliente.id,jogocliente.data().ultimaabertura);
+	if(jogocliente.data().ultimaabertura != null){
+		db.collection("jogocliente").doc(jogocliente.id).collection("interessados").where("datacadastro",">=",jogocliente.data().ultimaabertura)
+		.get().then(function (listaNovos){
+			if(listaNovos.size>0){
+				console.log("novo",jogocliente.id);
+				$('<div><a style="float:right" class="btn btn-floating pulse" onclick="verpropostas('+jogocliente.id+')">'
+						+'<i class="material-icons">message</i></a></div>').appendTo('#listainteressados_'+jogocliente.id);
+			}//verificar se existem mensagem antigas
+			else db.collection("jogocliente").doc(jogocliente.id).collection("interessados")
+			.get().then(function (listaTudo){
+				if(listaTudo.size>0){
+					console.log("tudo");
+					$('<a style="float:right" class="btn btn-floating" onclick="verpropostas('+jogocliente.id+')">' 
+							+'<i class="material-icons">message</i></a>').appendTo('#listainteressados_'+jogocliente.id);
+				}
+			});
+		});
+	}
+	return '';
+}
 
+function verpropostas(idjogocliente){
+	var local = window.localStorage;
+	local.setItem('idjogocliente',idjogocliente);
+	window.location = "propostaaceitacao.html";
+}
 
-//-----------------------------------------------------------------------------------------------
-//script para o infinite scroll
-//var url = geiftJSON()+"/jogo";
+// -----------------------------------------------------------------------------------------------
+// script para o infinite scroll
+// var url = geiftJSON()+"/jogo";
 var $currentPage = 0;
 var $pageSize = 20;
 var scrollStop = 0;
 var $filter = 'today';
 getJogosPorPerto();
-//Ajax call
+// Ajax call
 function getJogosPorPerto(){
 	document.addEventListener('deviceready', function(){
 		$.ajax({
@@ -190,24 +228,24 @@ function getJogosPorPerto(){
 
 function getMeusJogos(){
 	document.addEventListener('deviceready', function(){
-		db.collection("jogocliente")//.where("idcliente","==","n4sC21hwIab3wFZiFcM9")
+		db.collection("jogocliente").where("idcliente","==","13")
 		.get().then(function(lista){
 			lista.forEach(function(doc) {
-				adicionaMeuJogoTelaInicial(doc.data());				
+				adicionaMeuJogoTelaInicial(doc);				
 			});
 		});		
 	});
 }
 
-//$.getJSON(getJSON()+"/meusjogos?idCliente=9",
-//		function(data) {
-//		console.log(data);
-//			$.each(data,function(key, val) {
-//				console.log('jogo:'+val.id);
-////				atualizaJogosDB(val);
-////				adicionaJogoTelaInicial(val); 
-//		});
-//});
+// $.getJSON(getJSON()+"/meusjogos?idCliente=9",
+// function(data) {
+// console.log(data);
+// $.each(data,function(key, val) {
+// console.log('jogo:'+val.id);
+// // atualizaJogosDB(val);
+// // adicionaJogoTelaInicial(val);
+// });
+// });
 //
 
 $(document).scroll(function(e){
@@ -226,17 +264,18 @@ $(document).scroll(function(e){
           }
       });
 
-//      $('.filter').click(function(){
-//          $filter = $(this).attr('id');
-//          $('#grid-listing').empty();
-//          $currentPage = 0;
-//          scrollStop = 0;
-//          getJogosPorPerto();
-//      });
+// $('.filter').click(function(){
+// $filter = $(this).attr('id');
+// $('#grid-listing').empty();
+// $currentPage = 0;
+// scrollStop = 0;
+// getJogosPorPerto();
+// });
 
 getMeusJogos();
-//google.maps.event.addDomListener(window, 'load', function(){
-//	navigator.geolocation.getCurrentPosition(cadastracliente, null, { timeout: 3000 });});
+// google.maps.event.addDomListener(window, 'load', function(){
+// navigator.geolocation.getCurrentPosition(cadastracliente, null, { timeout:
+// 3000 });});
 
 function cadastracliente(position){
 	var local = window.localStorage;
@@ -246,7 +285,7 @@ function cadastracliente(position){
 	var lat=position.coords.latitude.toFixed(6);
     var long=position.coords.longitude.toFixed(6);
     
-	    //if(lat != 0)
+	    // if(lat != 0)
     dados={nome:lat,
     		telefone:"23423423",
     		localizacao: new firebase.firestore.GeoPoint(position.coords.latitude, position.coords.longitude)};
@@ -283,39 +322,41 @@ function getImagemJogo(idJogo){
 
 function getImagemPlataforma(id){
 
-//	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
+// window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
 //
-//	    console.log('file system open: ' + fs.name);
-//	    fs.root.getFile("newPersistentFile.txt", { create: true, exclusive: false }, function (fileEntry) {
+// console.log('file system open: ' + fs.name);
+// fs.root.getFile("newPersistentFile.txt", { create: true, exclusive: false },
+// function (fileEntry) {
 //
-//	        console.log("fileEntry is file?" + fileEntry.isFile.toString());
-//	        // fileEntry.name == 'someFile.txt'
-//	        // fileEntry.fullPath == '/someFile.txt'
-//	        writeFile(fileEntry, null);
-//	    }, function(){console.log("111");});
-//	}, function(){console.log("22222");});	
+// console.log("fileEntry is file?" + fileEntry.isFile.toString());
+// // fileEntry.name == 'someFile.txt'
+// // fileEntry.fullPath == '/someFile.txt'
+// writeFile(fileEntry, null);
+// }, function(){console.log("111");});
+// }, function(){console.log("22222");});
 
-//	}, onErrorLoadFs);
-//	window.resolveLocalFileSystemURI("img/plataforma50/15_50.JPG", function(){
-//		console.log("existe");
-//	}, function(){
-//		console.log("nao existe");
-//	});
+// }, onErrorLoadFs);
+// window.resolveLocalFileSystemURI("img/plataforma50/15_50.JPG", function(){
+// console.log("existe");
+// }, function(){
+// console.log("nao existe");
+// });
 
-	//return "img/plataforma50/15_50.JPG";
+	// return "img/plataforma50/15_50.JPG";
 	return "img/jogo90/"+id + "_90.png";
 }
 
 
-//		db.collection("jogos").get().then({ includeQueryMetadataChanges: true }, function(snapshot) {       
-//			snapshot.docChanges.forEach(function(change) {
-//				console.log('change',change);
-//				adicionaJogoTelaInicial(change.doc.data());
-//				if (change.type === "added") {console.log("New city: ", change.doc.data());}
+// db.collection("jogos").get().then({ includeQueryMetadataChanges: true },
+// function(snapshot) {
+// snapshot.docChanges.forEach(function(change) {
+// console.log('change',change);
+// adicionaJogoTelaInicial(change.doc.data());
+// if (change.type === "added") {console.log("New city: ", change.doc.data());}
 //				
-//				var source = snapshot.metadata.fromCache ? "local cache" : "server";           
-//				console.log("Data came from " + source);       });   
-//			});
+// var source = snapshot.metadata.fromCache ? "local cache" : "server";
+// console.log("Data came from " + source); });
+// });
 	
 
 const messaging = firebase.messaging();
@@ -331,7 +372,7 @@ messaging.requestPermission()
 });
 
 messaging.onMessage(function(payload){
-//Materialize.toast(payload, 4000);
+// Materialize.toast(payload, 4000);
 console.log("Mensagem", payload);
 })
 

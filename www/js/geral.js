@@ -1,3 +1,4 @@
+  var teste="0";
 //
 //ImgCache.options.debug = true;
 ////increase allocated space on Chrome to 50MB, default was 10MB
@@ -48,17 +49,36 @@ function gerURLplataforma90(id){
 }
 
 function gerURLplataforma(id){
-	return "http://localhost:5000/"+id+".png";
+	return "http://192.168.15.5:5000/"+id+".png";
 }
 
 function gerURLjogo90(id){
-	return "http://localhost:5000/jogo90/"+id+"_90.png";
+	return "http://192.168.15.5:5000/jogo90/"+id+"_90.png";
 }
 
 function gerURLjogo(id){
-	return "http://localhost:5000/jogo/"+id+"_90.png";
+	return "http://192.168.15.5:5000/jogo/"+id+"_90.png";
 }
 
 $('.botao-voltar').on('click', function() {
 	voltar();	
 });
+
+
+function distancia(location1, location2) {
+	  var radius = 6371; // Earth's radius in kilometers
+	  var latDelta = degreesToRadians(location2[0] - location1[0]);
+	  var lonDelta = degreesToRadians(location2[1] - location1[1]);
+
+	  var a = (Math.sin(latDelta / 2) * Math.sin(latDelta / 2)) +
+	          (Math.cos(degreesToRadians(location1[0])) * Math.cos(degreesToRadians(location2[0])) *
+	          Math.sin(lonDelta / 2) * Math.sin(lonDelta / 2));
+
+	  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	  return radius * c;
+};
+
+function degreesToRadians(degrees) {
+	  return (degrees * Math.PI / 180);
+	};
