@@ -6,16 +6,29 @@ document.addEventListener('deviceready', function(){
     { 
 		"pt-BR": {
             sim: "SIM",
-            nao: "Nops"
+            nao: "Nops",
+            perto:"Por perto",
+            meusjogos:"Meus jogos",
+            escolhaopcao:"Escolha uma opção",
+            selecioneconsole:"Selecione um console",
+            estado:"Estado de conservação"
+            
+ 
         },
         fr: {
             sim: "Oui",
-            nao: "Non"
+            nao: "Non",
+            perto:""
         },
 
         en: {
             sim: "Yes",
-            nao: "No"
+            nao: "No",
+            perto:"Near by",
+            meusjogos:"My games",
+            escolhaopcao:"Pick a choice",
+            selecioneconsole:"Choose a console",
+            estado:"conservation state"
         }
 
     },
@@ -28,22 +41,22 @@ document.addEventListener('deviceready', function(){
 //alert(Localization.for("sim"));
 
 //window.location = "chat.html";
-$('.collection')
-    .on('click', '.collection-item', function(){
-        var nomeProduto = this.firstChild.textContent;
-        Materialize.toast(nomeProduto + ' adicionado', 1000);
-
-        var $badge = $('.badge', this);
-        if ($badge.length === 0) {
-            $badge = $('<span class="badge brown-text">0</span>').appendTo(this);
-        }
-
-        $badge.text(parseInt($badge.text()) + 1);
-    })
-    .on('click', '.badge', function() {
-        $(this).remove();
-        return false;
-    });
+//$('.collection')
+//    .on('click', '.collection-item', function(){
+//        var nomeProduto = this.firstChild.textContent;
+//        Materialize.toast(nomeProduto + ' adicionado', 1000);
+//
+//        var $badge = $('.badge', this);
+//        if ($badge.length === 0) {
+//            $badge = $('<span class="badge brown-text">0</span>').appendTo(this);
+//        }
+//
+//        $badge.text(parseInt($badge.text()) + 1);
+//    })
+//    .on('click', '.badge', function() {
+//        $(this).remove();
+//        return false;
+//    });
 
 
 
@@ -352,9 +365,6 @@ function salvaClienteJSon(dados){
 			});
 }
 
-function getImagemJogo(idJogo){
-	
-}
 
 function getImagemPlataforma(id){
 
@@ -395,28 +405,43 @@ function getImagemPlataforma(id){
 // });
 	
 
-const messaging = firebase.messaging();
-messaging.requestPermission()
-.then(function() {
-	console.log('Notification permission granted.');
-	console.log(messaging.getToken());
-	return messaging.getToken();
-}).then(function (token){
-	console.log("token",token);
-}).catch(function(err) {
-	console.log('Notification Unable.', err);
+//const messaging = firebase.messaging();
+//messaging.requestPermission()
+//.then(function() {
+//	console.log('Notification permission granted.');
+//	console.log(messaging.getToken());
+//	alert(messaging.getToken());
+//	return messaging.getToken();
+//}).then(function (token){
+//	alert(token);
+//}).catch(function(err) {
+//	alert(err);
+//});
+//
+//cordova.plugins.firebase.messaging.requestPermission().then(function(token) {
+//	alert(": ", token);
+//});
+
+cordova.plugins.firebase.messaging.requestPermission().then(function(token) {
+    console.log("APNS device token: ", token);
 });
 
-messaging.onMessage(function(payload){
-// Materialize.toast(payload, 4000);
-console.log("Mensagem", payload);
-})
+cordova.plugins.firebase.messaging.getToken().then(function(token) {
+    console.log("Got device token: ", token);
+});
 
-document.addEventListener('deviceready', function(){
-window.FirebasePlugin.getToken(function(token) {
-    // save this server-side and use it to push notifications to this device
-    console.log(token,token);
-}, function(error) {
-    console.error(error);
-});
-});
+
+window.addEventListener('pushnotification', function(notification) {
+    console.log("push");
+    // was the app in the forground when the notification was received?
+    window.addEventListener('pushnotification', function(notification) {
+        
+        // was the app in the forground when the notification was received?
+        var inForground = notification.$foreground;
+        // was the app active when then notification was received?
+        notification.$active;
+        
+        alert()
+    }, false);
+
+}, false);

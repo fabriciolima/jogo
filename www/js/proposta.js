@@ -29,7 +29,7 @@ function adicionaMeuJogoTelaInicial(proposta) {
 				+ '<h2 class="header">Jogo perto</h2>'
 				+ '<div class="card horizontal">'
 				+ '<div class="card-image">'
-	//			+ '	<img src="img/plataforma50/2_50.PNG"> '
+				+ '	<img src="'+gerURLjogo90(docJogo.data().idJogo)+'"> '
 //				+ '	<img src="'+ getImagemPlataforma(data.id)+ '">'
 				+ '</div>'
 				+ '<div class="card-stacked">'

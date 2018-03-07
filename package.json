@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "android-versions": "^1.2.1",
-    "cordova-android": "^7.0.0",
+    "cordova-android": "^6.0.0",
     "cordova-browser": "^5.0.1",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-firebase": "^0.1.25",
