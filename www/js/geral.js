@@ -41,7 +41,8 @@ function getJSON(){
 		
 	}
 	console.log("retornando localhost");
-	return "http://192.168.15.7:8080/json";
+	/* return "http://18.188.69.226:8080/json"; */
+	return "http://localhost:8080/json";
 }
 
 function gerURLplataforma90(id){
@@ -49,15 +50,15 @@ function gerURLplataforma90(id){
 }
 
 function gerURLplataforma(id){
-	return "http://192.168.15.5:5000/"+id+".png";
+	return "https://jogos-usados.firebaseapp.com/"+id+".png";
 }
 
 function gerURLjogo90(id){
-	return "http://192.168.15.5:5000/jogo90/"+id+"_90.png";
+	return "https://jogos-usados.firebaseapp.com/jogo90/"+id+"_90.png";
 }
 
 function gerURLjogo(id){
-	return "http://192.168.15.5:5000/jogo/"+id+"_90.png";
+	return "https://jogos-usados.firebaseapp.com/jogo/"+id+"_90.png";
 }
 
 $('.botao-voltar').on('click', function() {

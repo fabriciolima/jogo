@@ -1,3 +1,32 @@
+document.addEventListener('deviceready', function(){
+	console.log("iniciando");
+	Localization.initialize
+(
+    // Dictionnary
+    { 
+		"pt-BR": {
+            sim: "SIM",
+            nao: "Nops"
+        },
+        fr: {
+            sim: "Oui",
+            nao: "Non"
+        },
+
+        en: {
+            sim: "Yes",
+            nao: "No"
+        }
+
+    },
+    // Fallback language
+    "pt-BR"
+);
+	console.log("iniciado");
+	});
+
+//alert(Localization.for("sim"));
+
 //window.location = "chat.html";
 $('.collection')
     .on('click', '.collection-item', function(){
@@ -155,7 +184,7 @@ function adicionaMeuJogoTelaInicial(jogocliente) {
 function botaoTemJogosParaTroca(jogocliente){
 //	botao",db.collection("jogocliente").doc(jogocliente.id);
 	console.log(jogocliente.id,jogocliente.data().ultimaabertura);
-	if(jogocliente.data().ultimaabertura != null){
+	if( jogocliente.data() != null && jogocliente.data().ultimaabertura != null){
 		db.collection("jogocliente").doc(jogocliente.id).collection("interessados").where("datacadastro",">=",jogocliente.data().ultimaabertura)
 		.get().then(function (listaNovos){
 			if(listaNovos.size>0){
@@ -191,37 +220,43 @@ var scrollStop = 0;
 var $filter = 'today';
 getJogosPorPerto();
 // Ajax call
+google.maps.event.addDomListener(window, 'load', getLocation);
 function getJogosPorPerto(){
 	document.addEventListener('deviceready', function(){
-		console.log(000);
-		$.ajax({
-	              type: "GET",
-	              url: getJSON()+"/jogosperto",
-	              data: { 
-	            	  pos:getPointLocation(),
-	                  getJogosPorPerto: 1,
-	                  sortBy: 'name', 
-	                  sortOrder: 'ASC',
-	                  page: $currentPage,
-	                  size: $pageSize,
-	                  filterBy: $filter
-	              },
-	              crossDomain: false,
-	              cache: false,
-	              dataType: "json",
-	              beforeSend: function(){ 
-	                  scrollStop = 1;
-	              },
-	              success: function(data){
-	            	  for(cont = 0 ; cont < data.length; ++cont){
-	            		 // atualizaJogosDB(data.content[cont]);
-	            		  adicionaJogoTelaInicial(data[cont]);
-	            	  }
-	                  if(data != null) scrollStop = 0;
-	                   		else scrollStop = 1;
-	                  
-	              }
-	          });
+		navigator.geolocation.getCurrentPosition(function(posicao){
+			var lat=0;//position.coords.latitude;
+			var long=0;//position.coords.longitude;
+			console.log("Point(" + long+" "+lat+")");
+			pos = "Point(" + long+" "+lat+")";
+			$.ajax({
+				type: "GET",
+				url: getJSON()+"/jogosperto",
+				data: { 
+					pos:pos,
+					getJogosPorPerto: 1,
+					sortBy: 'name', 
+					sortOrder: 'ASC',
+					page: $currentPage,
+					size: $pageSize,
+					filterBy: $filter
+				},
+				crossDomain: false,
+				cache: false,
+				dataType: "json",
+				beforeSend: function(){ 
+					scrollStop = 1;
+				},
+				success: function(data){
+					for(cont = 0 ; cont < data.length; ++cont){
+						// atualizaJogosDB(data.content[cont]);
+						adicionaJogoTelaInicial(data[cont]);
+					}
+					if(data != null) scrollStop = 0;
+					else scrollStop = 1;
+					
+				}
+			});
+		}, onError, { timeout: 3000 });
 	});
 }
 

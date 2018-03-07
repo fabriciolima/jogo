@@ -38,6 +38,7 @@ function onSuccess(position) {
 }
 
 function onError(error) {
+	console.log("erro gps", error);
     alert('code: ' + error.code + '\n' +'message: ' + error.message + '\n');
 }
 

@@ -36,7 +36,7 @@ function telaLogin(){
 	document.addEventListener('deviceready', function(){
 		var local = window.localStorage;
 		var idCliente = local.getItem('idCliente');
-		window.location = "index2.html";
+//		window.location = "index2.html";
 		//loginGoogle();
 		if(idCliente != null)
 			window.location = "index2.html";
