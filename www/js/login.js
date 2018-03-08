@@ -15,7 +15,8 @@ function loginGoogle(){
 	  var user = result.user;
 	  console.log(user);
 	  var local = window.localStorage;
-	  local.setItem('idCliente', user.uid);  
+	  //local.setItem('idCliente', user.uid);
+	  alert(user.uid);
 	  local.setItem('nome', user.displayName);
 	}).catch(function(error) {
 		console.log(error);
@@ -31,41 +32,64 @@ function loginGoogle(){
 	});
 }
 
+function loginFacebook(){
+	firebase.auth().signInWithPopup(provider).then(function(result) {
+	  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+	  var token = result.credential.accessToken;
+	  // The signed-in user info.
+	  var user = result.user;
+	  console.log(user);
+	  alert(user.uid);
+	}).catch(function(error) {
+	  // Handle Errors here.
+	  var errorCode = error.code;
+	  var errorMessage = error.message;
+	  // The email of the user's account used.
+	  var email = error.email;
+	  // The firebase.auth.AuthCredential type that was used.
+	  var credential = error.credential;
+	  // ...
+	});
+}
 
 function telaLogin(){
 	document.addEventListener('deviceready', function(){
 		var local = window.localStorage;
-		var idCliente = local.getItem('idCliente');
-//		window.location = "index2.html";
-		//loginGoogle();
-		if(idCliente != null)
-			window.location = "index2.html";
-		else{
-//			loginGoogle();
+		local.setItem('lat',0);
+		local.setItem('idCliente',null);
+		
+		
+		lat = local.getItem('lat');
+		lon = local.getItem('lon');
+		
+		if(lat != null){
+			
+			//document.getElementById('localizacaoGPS').value = lon +" "+lat;
 		}
+		
 	});
 };
 
-//$('form').submit(function(){
-//	var local = window.localStorage;
-//    var postData = $(this).serialize();
-//    console.log('post:'+postData);
-//    console.log("tel:"+$('#telefone').val());
-//    console.log("nome:"+$('#nome').val());
-//    const docCliente = db.doc("cliente/ninguem");
-//	docCliente.set({
-//		nome: $('#nome').val(),
-//		telefone: $('#telefone').val()
-//	}).then(function(){
-//		console.log("salvo");
-//		alert("id:"+);
-//		
-//		window.location = "index2.html";
-//		})
-//		.catch(function(erro){
-//			console.log(erro);
-//		});
-//	return false;
-//});
-
+function salvaCliente(){
+	var local = window.localStorage;
+	lat = local.getItem('lat');
+	
+	if(local.getItem('idCliente')==null){
+		Materialize.toast(Localization.for("facalogin"));
+	}
+	else
+	if((lat == null) || (lat == 0)){
+		Materialize.toast(Localization.for("escolherlocalizacao"));
+	}
+	else{
+	
+		var postData = $(this).serialize();
+	    console.log('post:'+postData);
+	    console.log("tel:"+$('#telefone').val());
+	    console.log("nome:"+$('#nome').val());
+//	    	window.location = "index2.html";
+	}	
+	return false;
+	
+};
 

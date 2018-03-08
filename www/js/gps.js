@@ -65,9 +65,11 @@ function onBackKeyDown()
 
 function localizacao(){
 
-	criarDBGPS();
+	var local = window.localStorage;
+	local.setItem('lat',marker.getPosition().lat().toFixed(6));
+	local.setItem('lon',marker.getPosition().lng().toFixed(6));
+	
 	history.go(-1);
-	alert(marker.position);
 	//alert(marker.getPosition().lng().toFixed(6));
 	//criarDBGPS();
 	//alert('db gps ok');
@@ -86,27 +88,8 @@ function localizacao(){
 }
 
 function ocultandoMapa(){
-	alert("tentando mudar");
 	document.getElementById('localizacao').value = "xxxxxxx";
 	document.getElementById('localizacaoGPS').value = "xxxxxxx";
-}
-
-function criarDBGPS() {
-	var local = window.localStorage;
-	local.setItem('lat',marker.getPosition().lat().toFixed(6));
-	local.setItem('lon',marker.getPosition().lng().toFixed(6));
-	
-	console.log('criarDBGPS');
-//	var myDB = window.openDatabase("jogoDB.db",'1','auto',1024*1024*100);
-//		myDB.transaction(function(transaction) {
-//			transaction.executeSql('DROP TABLE IF EXISTS gps;');
-//	    	transaction.executeSql('CREATE TABLE IF NOT EXISTS gps (id integer primary key, lon text, lat text)');
-//	    	transaction.executeSql('insert into gps(id, lat, lon) VALUES(1,'
-//	    			+marker.getPosition().lat().toFixed(6)+'","'
-//	    			+marker.getPosition().lng().toFixed(6)+'")');
-//    	});
-
-	
 }
 
 

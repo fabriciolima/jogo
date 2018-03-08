@@ -1,42 +1,4 @@
-document.addEventListener('deviceready', function(){
-	console.log("iniciando");
-	Localization.initialize
-(
-    // Dictionnary
-    { 
-		"pt-BR": {
-            sim: "SIM",
-            nao: "Nops",
-            perto:"Por perto",
-            meusjogos:"Meus jogos",
-            escolhaopcao:"Escolha uma opção",
-            selecioneconsole:"Selecione um console",
-            estado:"Estado de conservação"
-            
- 
-        },
-        fr: {
-            sim: "Oui",
-            nao: "Non",
-            perto:""
-        },
 
-        en: {
-            sim: "Yes",
-            nao: "No",
-            perto:"Near by",
-            meusjogos:"My games",
-            escolhaopcao:"Pick a choice",
-            selecioneconsole:"Choose a console",
-            estado:"conservation state"
-        }
-
-    },
-    // Fallback language
-    "pt-BR"
-);
-	console.log("iniciado");
-	});
 
 //alert(Localization.for("sim"));
 
@@ -69,6 +31,17 @@ $('.botao-voltar').on('click', function() {
     
 });
 
+var options={message:"kjhkjh",
+	  	   subject:"llkjlj", 
+	  	   files:null, 
+	  	   url:"http://google.com/",
+	  	   chooserTitle:'titulo'}
+
+//window.plugins.socialsharing.shareWithOptions(options,null,null);
+
+	
+
+
 $('.atualiza').on('click',function(){
                 // mRefresh.refresh();
         //refresh();
@@ -82,7 +55,17 @@ $('.atualiza').on('click',function(){
 
 
 $('.cadastro-jogo').on('click', function() {
-	   window.location = "cadastroJogo.html";
+	window.location = "login.html";
+//	var local = window.localStorage;
+//	console.log(1);
+//	var idCliente = local.getItem('idCliente');
+//	console.log(idCliente);
+//	if(idCliente != null)
+//		window.location = "cadastroJogo.html";
+//	else{
+//		window.location = "login.html";
+////		loginGoogle();
+//	}
     
 });
 
@@ -149,11 +132,17 @@ function adicionaJogoTelaInicial(data) {
 
 function proporTroca(idJogoCliente,distancia){// },nomeJogo,nomePlataforma){
 	var local = window.localStorage;
+	var idCliente = local.getItem('idCliente');
+	if(idCliente == null)
+		window.location = "login.html";
+	else{
+//		loginGoogle();
 	local.setItem('idjogocliente',idJogoCliente);
 // local.setItem('nomeJogo',nomeJogo);
 // local.setItem('nomePlataforma',nomePlataforma);
 	local.setItem('distancia',distancia);
 	window.location = "proposta.html";
+	}
 }
 function adicionaMeuJogoTelaInicial(jogocliente) {
 	var items = [];

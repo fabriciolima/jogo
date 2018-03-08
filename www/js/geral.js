@@ -1,4 +1,43 @@
-  var teste="0";
+document.addEventListener('deviceready', function(){
+	Localization.initialize(
+    { 
+		"pt-BR": {
+            sim: "SIM",
+            nao: "Nops",
+            perto:"Por perto",
+            meusjogos:"Meus jogos",
+            escolhaopcao:"Escolha uma opção",
+            selecioneconsole:"Selecione um console",
+            estado:"Estado de conservação",
+            loginfacebook:"Login com Facebook",
+            logingoogle:"Login com Google",
+            localizacao:"Localização",
+            escolherlocalizacao:"Escolher localização",
+            facalogin:"Faça o Login com uma conta selecionada"
+        },
+        fr: {
+            sim: "Oui",
+            nao: "Non",
+            perto:""
+        },
+        en: {
+            sim: "Yes",
+            nao: "No",
+            perto:"Near by",
+            meusjogos:"My games",
+            escolhaopcao:"Pick a choice",
+            selecioneconsole:"Choose a console",
+            estado:"conservation state",
+            loginfacebook:"Login with Facebook",
+            logingoogle:"Login with Google",
+            localizacao:"Localization",
+            escolherlocalizacao:"Choose a localization",
+            facalogin:"Login with a selected account"
+        }
+    },"en");
+	});
+
+
 //
 //ImgCache.options.debug = true;
 ////increase allocated space on Chrome to 50MB, default was 10MB
@@ -83,3 +122,28 @@ function distancia(location1, location2) {
 function degreesToRadians(degrees) {
 	  return (degrees * Math.PI / 180);
 	};
+
+	
+	
+var admobid = {};
+	  if( /(android)/i.test(navigator.userAgent) ) { // for android & amazon-fireos
+	    admobid = {
+	      banner: 'ca-app-pub-5252544817016620/5591870476', // or DFP format "/6253334/dfp_example_ad"
+	      interstitial: 'ca-app-pub-xxx/yyy'
+	    };
+	  } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+	    admobid = {
+	      banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+	      interstitial: 'ca-app-pub-5252544817016620/8293630401'
+	    };
+	  } else { // for windows phone
+	    admobid = {
+	      banner: 'ca-app-pub-5252544817016620/5591870476', // or DFP format "/6253334/dfp_example_ad"
+	      interstitial: 'ca-app-pub-xxx/kkk'
+	    };
+	  }
+
+if(AdMob) AdMob.createBanner({
+		  adId: admobid.banner,
+		  position: AdMob.AD_POSITION.TOP_CENTER,
+		  autoShow: true });
