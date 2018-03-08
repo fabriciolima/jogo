@@ -68,7 +68,7 @@ function localizacao(){
 	var local = window.localStorage;
 	local.setItem('lat',marker.getPosition().lat().toFixed(6));
 	local.setItem('lon',marker.getPosition().lng().toFixed(6));
-	
+	console.log(local.getItem('lon'));
 	history.go(-1);
 	//alert(marker.getPosition().lng().toFixed(6));
 	//criarDBGPS();

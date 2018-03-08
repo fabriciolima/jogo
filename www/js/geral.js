@@ -13,7 +13,8 @@ document.addEventListener('deviceready', function(){
             logingoogle:"Login com Google",
             localizacao:"Localização",
             escolherlocalizacao:"Escolher localização",
-            facalogin:"Faça o Login com uma conta selecionada"
+						facalogin:"Faça o Login com uma conta selecionada",
+						enviar:"Enviar"
         },
         fr: {
             sim: "Oui",
@@ -32,7 +33,8 @@ document.addEventListener('deviceready', function(){
             logingoogle:"Login with Google",
             localizacao:"Localization",
             escolherlocalizacao:"Choose a localization",
-            facalogin:"Login with a selected account"
+						facalogin:"Login with a selected account",
+						enviar:"Send"
         }
     },"en");
 	});
