@@ -7,9 +7,12 @@ function getMeuJogo(){
 	console.log("idjogocliente",idjogocliente);
 	
 	document.addEventListener('deviceready', function(){
-		db.collection("jogocliente").doc(idjogocliente).get().then(function(doc){
+		rcRef = db.collection("jogocliente").doc(idjogocliente);
+		
+		rcRef.get().then(function(doc){
 			if(doc.exists){
 					adicionaMeuJogoTela(doc.data());
+					adicionaPropostas(rcRef);
 				}else{
 					console.log("doc nao existe");
 				}
@@ -48,13 +51,12 @@ function adicionaMeuJogoTela(proposta) {
 		});
 	});
 };
-adicionaPropostas();
 
-function adicionaPropostas(){
+function adicionaPropostas(rcRef){
 	items = [];
 	var local = window.localStorage;
 	idjogocliente = local.getItem('idjogocliente');
-	db.collection('jogocliente').doc(idjogocliente).collection('interessados').get().then(function(propostalista){
+	jcRef..collection('interessados').get().then(function(propostalista){
 		propostalista.forEach(function(propostadoc) {
 
 			db.collection('jogocliente').doc(propostadoc.data().idjogocliente)
